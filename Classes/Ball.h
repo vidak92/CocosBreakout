@@ -9,9 +9,9 @@
 #define Ball_h
 
 #include "cocos2d.h"
-#include "GameNode.h"
+#include "BrickNode.h"
 
-class Ball : public GameNode
+class Ball : public BrickNode
 {
 public:
     CREATE_FUNC(Ball);

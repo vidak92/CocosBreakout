@@ -37,7 +37,7 @@ bool GameScene::init()
     {
         for (int j = 0; j < BRICK_COUNT_Y; ++j)
         {
-            GameNode* brick = GameNode::create();
+            BrickNode* brick = BrickNode::create();
             bricks[i][j] = brick;
             brick->setScale(BRICK_SCALE_X, BRICK_SCALE_Y);
             auto position = NS_CC::Vec2(i * (BRICK_SCALE_X + BRICK_GAP) + BRICK_OFFSET_X,
@@ -114,7 +114,7 @@ void GameScene::update(float dt)
         }
         for (int j = 0; j < BRICK_COUNT_Y; ++j)
         {
-            GameNode* brick = bricks[i][j];
+            BrickNode* brick = bricks[i][j];
             if (!brick->isActive)
             {
                 continue;

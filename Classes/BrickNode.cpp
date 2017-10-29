@@ -1,13 +1,13 @@
 //
-//  GameNode.cpp
+//  BrickNode.cpp
 //  Breakout-mobile
 //
 //  Created by Vidak Mijanovikj on 10/14/17.
 //
 
-#include "GameNode.h"
+#include "BrickNode.h"
 
-bool GameNode::init()
+bool BrickNode::init()
 {
     if (!Node::init())
     {
@@ -25,12 +25,12 @@ bool GameNode::init()
     return true;
 }
 
-void GameNode::update(float dt)
+void BrickNode::update(float dt)
 {
     
 }
 
-NS_CC::Rect GameNode::getRect()
+NS_CC::Rect BrickNode::getRect()
 {
     return NS_CC::Rect(getPositionX() - getScaleX() / 2,
                        getPositionY() - getScaleY() / 2,
@@ -38,13 +38,13 @@ NS_CC::Rect GameNode::getRect()
                        getScaleY());
 }
 
-void GameNode::setDrawingColor(const NS_CC::Color3B& color)
+void BrickNode::setDrawingColor(const NS_CC::Color3B& color)
 {
     sprite->setVisible(true);
     sprite->setColor(color);
 }
 
-void GameNode::clear()
+void BrickNode::clear()
 {
     sprite->setVisible(false);
 }

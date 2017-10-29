@@ -9,9 +9,9 @@
 #define Paddle_h
 
 #include "cocos2d.h"
-#include "GameNode.h"
+#include "BrickNode.h"
 
-class Paddle : public GameNode
+class Paddle : public BrickNode
 {
 public:
     CREATE_FUNC(Paddle);

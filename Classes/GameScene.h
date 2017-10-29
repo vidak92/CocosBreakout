@@ -33,7 +33,7 @@ private:
     Paddle* paddle;
     Ball* ball;
     NS_CC::Vec2 ballOffset;
-    GameNode* bricks[BRICK_COUNT_X][BRICK_COUNT_Y];
+    BrickNode* bricks[BRICK_COUNT_X][BRICK_COUNT_Y];
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static NS_CC::Scene* createScene();
