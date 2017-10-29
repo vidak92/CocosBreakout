@@ -14,7 +14,10 @@
 class Ball : public BrickNode
 {
 public:
+    bool normalizedDirection;
+    
     CREATE_FUNC(Ball);
+    bool init() override;
     void update(float dt) override;
 };
 

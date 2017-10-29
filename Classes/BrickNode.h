@@ -21,12 +21,11 @@ public:
     bool isActive;
     
     CREATE_FUNC(BrickNode);
-    bool init() override;
-    void update(float dt) override;
+    virtual bool init() override;
+    virtual void update(float dt) override;
     NS_CC::Rect getRect();
     void setDrawingColor(const NS_CC::Color3B& color);
     void clear();
 };
 
 #endif /* BrickNode_h */
-

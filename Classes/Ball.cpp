@@ -7,10 +7,30 @@
 
 #include "Ball.h"
 
+bool Ball::init()
+{
+    if (!BrickNode::init())
+    {
+        return false;
+    }
+    
+    normalizedDirection = false;
+    
+    return true;
+}
+
 void Ball::update(float dt)
 {
     auto position = getPosition();
-    position += direction * velocity * dt;
+    if (normalizedDirection)
+    {
+        position += direction.getNormalized() * velocity * dt;
+    }
+    else
+    {
+        position += direction * velocity * dt;
+    }
+    
     if (position.x >= bounds.getMaxX() - getScaleX() / 2)
     {
         direction.x = -std::abs(direction.x);
@@ -27,5 +47,6 @@ void Ball::update(float dt)
     {
         direction.y = std::abs(direction.y);
     }
+    
     this->setPosition(position);
 }

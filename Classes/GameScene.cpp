@@ -192,6 +192,10 @@ void GameScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event
                 }
             }
             break;
+        case NS_CC::EventKeyboard::KeyCode::KEY_N:
+            ball->normalizedDirection = !ball->normalizedDirection;
+            std::cout << "normalizedDirection: " << ball->normalizedDirection << std::endl;
+            break;
         default:
             break;
     }
