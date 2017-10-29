@@ -14,10 +14,11 @@ bool GameNode::init()
         return false;
     }
     
-    drawNode = NS_CC::DrawNode::create();
-    drawNode->setPosition(0, 0);
-    addChild(drawNode);
-    setDrawingColor(NS_CC::Color4F::WHITE);
+    sprite = NS_CC::Sprite::create("res/rect.png");
+    sprite->setPosition(0, 0);
+    sprite->setAnchorPoint(NS_CC::Vec2(0.5, 0.5));
+    addChild(sprite);
+    setDrawingColor(NS_CC::Color3B::WHITE);
     isActive = true;
     
 //    scheduleUpdate();
@@ -37,13 +38,13 @@ NS_CC::Rect GameNode::getRect()
                        getScaleY());
 }
 
-void GameNode::setDrawingColor(const NS_CC::Color4F& color)
+void GameNode::setDrawingColor(const NS_CC::Color3B& color)
 {
-    drawNode->clear();
-    drawNode->drawSolidRect(NS_CC::Vec2(-0.5, -0.5), NS_CC::Vec2(0.5, 0.5), color);
+    sprite->setVisible(true);
+    sprite->setColor(color);
 }
 
 void GameNode::clear()
 {
-    drawNode->clear();
+    sprite->setVisible(false);
 }

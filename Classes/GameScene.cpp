@@ -88,8 +88,8 @@ void GameScene::update(float dt)
     auto paddleRect = paddle->getRect();
     if (ballRect.intersectsRect(paddleRect))
     {
-        ball->setDrawingColor(NS_CC::Color4F::RED);
-        paddle->setDrawingColor(NS_CC::Color4F::GREEN);
+        ball->setDrawingColor(NS_CC::Color3B::RED);
+        paddle->setDrawingColor(NS_CC::Color3B::GREEN);
         auto ballDirection = ball->direction;
         float xDiff = ballPosition.x - paddlePosition.x;
         float maxXDiff = ball->getScaleX() / 2 + paddle->getScaleX() / 2;
@@ -101,8 +101,8 @@ void GameScene::update(float dt)
     }
     else
     {
-        ball->setDrawingColor(NS_CC::Color4F::WHITE);
-        paddle->setDrawingColor(NS_CC::Color4F::WHITE);
+        ball->setDrawingColor(NS_CC::Color3B::WHITE);
+        paddle->setDrawingColor(NS_CC::Color3B::WHITE);
     }
     
     bool collisionDetected = false;
@@ -121,8 +121,8 @@ void GameScene::update(float dt)
             }
             if (ballRect.intersectsRect(brick->getRect()))
             {
-                ball->setDrawingColor(NS_CC::Color4F::RED);
-                brick->setDrawingColor(NS_CC::Color4F::BLUE);
+                ball->setDrawingColor(NS_CC::Color3B::RED);
+                brick->setDrawingColor(NS_CC::Color3B::BLUE);
                 brick->clear();
                 brick->isActive = false;
                 auto ballDirection = ball->direction;
@@ -153,7 +153,7 @@ void GameScene::update(float dt)
             }
             else
             {
-                brick->setDrawingColor(NS_CC::Color4F::WHITE);
+                brick->setDrawingColor(NS_CC::Color3B::WHITE);
             }
         }
     }
@@ -187,7 +187,7 @@ void GameScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event
             {
                 for (int j = 0; j < BRICK_COUNT_Y; ++j)
                 {
-                    bricks[i][j]->setDrawingColor(NS_CC::Color4F::WHITE);
+                    bricks[i][j]->setDrawingColor(NS_CC::Color3B::WHITE);
                     bricks[i][j]->isActive = true;
                 }
             }
