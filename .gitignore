@@ -1,0 +1,86 @@
+# ================
+# cocos2d-x
+# ================
+[Bb]in/
+cocosStudio.cfg
+cocosStudio.udf
+
+# ================
+# c++
+# ================
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Debug Object files
+*.o.d
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# ================
+# Windows crap
+# ================
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# ================
+# Mac crap
+# ================
+
+.DS_Store
+
+# ================
+# Projects
+# ================
+
+proj.android/
+proj.android-studio/
+proj.ios_mac/
+proj.linux/
+proj.win32/
+proj.tizen/
+
+# ================
+# Xcode
+# ================
+
+.DS_Store
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xcworkspace
+!default.xcworkspace
+xcuserdata
+profile
+*.moved-aside
+DerivedData
+.idea/
+
+# ================
+# Others
+# ================
+
+cocos/
