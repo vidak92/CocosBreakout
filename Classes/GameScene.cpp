@@ -103,7 +103,7 @@ void GameScene::update(float dt)
         for (int j = 0; j < grid->MAX_BRICK_COUNT_Y; ++j)
         {
             Brick* brick = grid->getBrick(i, j);
-            if (!brick->isActive)
+            if (brick->getType() == BrickType::EMPTY)
             {
                 continue;
             }
@@ -112,7 +112,7 @@ void GameScene::update(float dt)
                 ball->setDrawingColor(NS_CC::Color3B::RED);
                 brick->setDrawingColor(NS_CC::Color3B::BLUE);
                 brick->clear();
-                brick->isActive = false;
+                brick->setType(BrickType::EMPTY);
                 auto ballDirection = ball->direction;
                 auto brickPosition = brick->getPosition();
                 float xDiff = (ballPosition.x - brickPosition.x) / (ball->getScaleX() / 2 + brick->getScaleX() / 2);

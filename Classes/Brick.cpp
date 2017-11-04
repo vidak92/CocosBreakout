@@ -7,6 +7,7 @@
 
 #include "Brick.h"
 
+// TODO: initWithType
 bool Brick::init()
 {
     if (!Node::init())
@@ -18,8 +19,7 @@ bool Brick::init()
     sprite->setPosition(0, 0);
     sprite->setAnchorPoint(NS_CC::Vec2(0.5, 0.5));
     addChild(sprite);
-    setDrawingColor(NS_CC::Color3B::WHITE);
-    isActive = true;
+    setType(BrickType::REGULAR);
     
 //    scheduleUpdate();
     return true;
@@ -38,10 +38,31 @@ NS_CC::Rect Brick::getRect()
                        getScaleY());
 }
 
+BrickType Brick::getType()
+{
+    return type;
+}
+
 void Brick::setDrawingColor(const NS_CC::Color3B& color)
 {
-    sprite->setVisible(true);
+    if (!sprite->isVisible())
+    {
+        sprite->setVisible(true);
+    }
     sprite->setColor(color);
+}
+
+void Brick::setType(BrickType type)
+{
+    this->type = type;
+    if (type == BrickType::EMPTY)
+    {
+        clear();
+    }
+    else
+    {
+        setDrawingColor(NS_CC::Color3B::WHITE);
+    }
 }
 
 void Brick::clear()

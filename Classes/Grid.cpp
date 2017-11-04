@@ -44,6 +44,7 @@ bool Grid::init()
                                         screenHeight - j * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
             std::cout << "pos: " << position.x << ", " << position.y << std::endl;
             brick->setPosition(position);
+            // TODO: get brick type from config
             this->addChild(brick);
         }
     }
@@ -57,8 +58,8 @@ void Grid::reset()
     {
         for (int j = 0; j < MAX_BRICK_COUNT_Y; ++j)
         {
-            bricks[i][j]->setDrawingColor(NS_CC::Color3B::WHITE);
-            bricks[i][j]->isActive = true;
+            // TODO: get brick type from config
+            bricks[i][j]->setType(BrickType::REGULAR);
         }
     }
 }
