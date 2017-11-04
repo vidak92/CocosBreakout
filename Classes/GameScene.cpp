@@ -94,13 +94,13 @@ void GameScene::update(float dt)
     }
     
     bool collisionDetected = false;
-    for (int i = 0; i < grid->MAX_BRICK_COUNT_X; ++i)
+    for (int i = 0; i < BRICK_COUNT_X; ++i)
     {
         if (collisionDetected)
         {
             break;
         }
-        for (int j = 0; j < grid->MAX_BRICK_COUNT_Y; ++j)
+        for (int j = 0; j < BRICK_COUNT_Y; ++j)
         {
             Brick* brick = grid->getBrick(i, j);
             if (brick->getType() == BrickType::EMPTY)

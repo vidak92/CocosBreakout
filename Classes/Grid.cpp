@@ -33,18 +33,21 @@ bool Grid::init()
         return false;
     }
     
-    for (int i = 0; i < MAX_BRICK_COUNT_X; ++i)
+    LevelConfig levelConfig;
+    memcpy(bricksConfig, levelConfig.level0, sizeof(levelConfig.level0));
+    
+    for (int i = 0; i < BRICK_COUNT_X; ++i)
     {
-        for (int j = 0; j < MAX_BRICK_COUNT_Y; ++j)
+        for (int j = 0; j < BRICK_COUNT_Y; ++j)
         {
             Brick* brick = Brick::create();
-            bricks[i][j] = brick;
+            brick->setType(bricksConfig[j][i]);
             brick->setScale(BRICK_SCALE_X, BRICK_SCALE_Y);
             auto position = NS_CC::Vec2(i * (BRICK_SCALE_X + BRICK_GAP) + BRICK_OFFSET_X,
                                         screenHeight - j * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
             std::cout << "pos: " << position.x << ", " << position.y << std::endl;
             brick->setPosition(position);
-            // TODO: get brick type from config
+            bricks[i][j] = brick;
             this->addChild(brick);
         }
     }
@@ -54,12 +57,11 @@ bool Grid::init()
 
 void Grid::reset()
 {
-    for (int i = 0; i < MAX_BRICK_COUNT_X; ++i)
+    for (int i = 0; i < BRICK_COUNT_X; ++i)
     {
-        for (int j = 0; j < MAX_BRICK_COUNT_Y; ++j)
+        for (int j = 0; j < BRICK_COUNT_Y; ++j)
         {
-            // TODO: get brick type from config
-            bricks[i][j]->setType(BrickType::REGULAR);
+            bricks[i][j]->setType(bricksConfig[j][i]);
         }
     }
 }
