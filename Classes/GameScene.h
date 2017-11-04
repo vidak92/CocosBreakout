@@ -11,20 +11,13 @@
 #include "cocos2d.h"
 #include "Paddle.h"
 #include "Ball.h"
+#include "Grid.h"
 
-USING_NS_CC;
+//USING_NS_CC;
 
 class GameScene : public cocos2d::Scene
 {
 private:
-    static const int BRICK_COUNT_X = 8;
-    static const int BRICK_COUNT_Y = 5;
-    static const int BRICK_GAP = 10;
-    static const int BRICK_SCALE_X = 65;
-    static const int BRICK_SCALE_Y = 30;
-    static const int BRICK_OFFSET_X = 55;
-    static const int BRICK_OFFSET_Y = 35;
-    
     int width;
     int height;
     bool leftKeyDown;
@@ -33,7 +26,7 @@ private:
     Paddle* paddle;
     Ball* ball;
     NS_CC::Vec2 ballOffset;
-    BrickNode* bricks[BRICK_COUNT_X][BRICK_COUNT_Y];
+    Grid* grid;
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static NS_CC::Scene* createScene();

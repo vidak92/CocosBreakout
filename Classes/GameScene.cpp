@@ -33,20 +33,8 @@ bool GameScene::init()
         return false;
     }
     
-    for (int i = 0; i < BRICK_COUNT_X; ++i)
-    {
-        for (int j = 0; j < BRICK_COUNT_Y; ++j)
-        {
-            BrickNode* brick = BrickNode::create();
-            bricks[i][j] = brick;
-            brick->setScale(BRICK_SCALE_X, BRICK_SCALE_Y);
-            auto position = NS_CC::Vec2(i * (BRICK_SCALE_X + BRICK_GAP) + BRICK_OFFSET_X,
-                                        height - j * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
-            std::cout << "pos: " << position.x << ", " << position.y << std::endl;
-            brick->setPosition(position);
-            this->addChild(brick);
-        }
-    }
+    grid = Grid::create(width, height);
+    this->addChild(grid);
     
     paddle = Paddle::create();
     paddle->setScale(120, 20);
@@ -106,15 +94,15 @@ void GameScene::update(float dt)
     }
     
     bool collisionDetected = false;
-    for (int i = 0; i < BRICK_COUNT_X; ++i)
+    for (int i = 0; i < grid->MAX_BRICK_COUNT_X; ++i)
     {
         if (collisionDetected)
         {
             break;
         }
-        for (int j = 0; j < BRICK_COUNT_Y; ++j)
+        for (int j = 0; j < grid->MAX_BRICK_COUNT_Y; ++j)
         {
-            BrickNode* brick = bricks[i][j];
+            Brick* brick = grid->getBrick(i, j);
             if (!brick->isActive)
             {
                 continue;
@@ -183,14 +171,7 @@ void GameScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event
             break;
         case NS_CC::EventKeyboard::KeyCode::KEY_B:
             // reset board
-            for (int i = 0; i < BRICK_COUNT_X; ++i)
-            {
-                for (int j = 0; j < BRICK_COUNT_Y; ++j)
-                {
-                    bricks[i][j]->setDrawingColor(NS_CC::Color3B::WHITE);
-                    bricks[i][j]->isActive = true;
-                }
-            }
+            grid->reset();
             break;
         case NS_CC::EventKeyboard::KeyCode::KEY_N:
             ball->normalizedDirection = !ball->normalizedDirection;

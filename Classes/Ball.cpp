@@ -9,7 +9,7 @@
 
 bool Ball::init()
 {
-    if (!BrickNode::init())
+    if (!Brick::init())
     {
         return false;
     }

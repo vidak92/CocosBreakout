@@ -9,9 +9,9 @@
 #define Ball_h
 
 #include "cocos2d.h"
-#include "BrickNode.h"
+#include "Brick.h"
 
-class Ball : public BrickNode
+class Ball : public Brick
 {
 public:
     bool normalizedDirection;

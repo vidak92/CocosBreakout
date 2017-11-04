@@ -10,7 +10,7 @@
 
 #include "cocos2d.h"
 
-class BrickNode : public NS_CC::Node
+class Brick : public NS_CC::Node
 {
 private:
     NS_CC::Sprite* sprite;
@@ -20,7 +20,7 @@ public:
     NS_CC::Rect bounds;
     bool isActive;
     
-    CREATE_FUNC(BrickNode);
+    CREATE_FUNC(Brick);
     virtual bool init() override;
     virtual void update(float dt) override;
     NS_CC::Rect getRect();

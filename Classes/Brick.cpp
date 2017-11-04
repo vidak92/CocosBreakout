@@ -1,20 +1,20 @@
 //
-//  BrickNode.cpp
+//  Brick.cpp
 //  Breakout-mobile
 //
 //  Created by Vidak Mijanovikj on 10/14/17.
 //
 
-#include "BrickNode.h"
+#include "Brick.h"
 
-bool BrickNode::init()
+bool Brick::init()
 {
     if (!Node::init())
     {
         return false;
     }
     
-    sprite = NS_CC::Sprite::create("res/rect.png");
+    sprite = NS_CC::Sprite::create("rect.png");
     sprite->setPosition(0, 0);
     sprite->setAnchorPoint(NS_CC::Vec2(0.5, 0.5));
     addChild(sprite);
@@ -25,12 +25,12 @@ bool BrickNode::init()
     return true;
 }
 
-void BrickNode::update(float dt)
+void Brick::update(float dt)
 {
     
 }
 
-NS_CC::Rect BrickNode::getRect()
+NS_CC::Rect Brick::getRect()
 {
     return NS_CC::Rect(getPositionX() - getScaleX() / 2,
                        getPositionY() - getScaleY() / 2,
@@ -38,13 +38,13 @@ NS_CC::Rect BrickNode::getRect()
                        getScaleY());
 }
 
-void BrickNode::setDrawingColor(const NS_CC::Color3B& color)
+void Brick::setDrawingColor(const NS_CC::Color3B& color)
 {
     sprite->setVisible(true);
     sprite->setColor(color);
 }
 
-void BrickNode::clear()
+void Brick::clear()
 {
     sprite->setVisible(false);
 }
