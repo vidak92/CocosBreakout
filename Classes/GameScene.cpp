@@ -38,7 +38,7 @@ bool GameScene::init()
     
     paddle = Paddle::create();
     paddle->setScale(120, 20);
-    paddle->setPosition(100, 80);
+    paddle->setPosition(100, 40);
     paddle->direction = NS_CC::Vec2::ZERO;
     paddle->velocity = 400;
     paddle->bounds = NS_CC::Rect(0, 0, width, height);
@@ -49,7 +49,7 @@ bool GameScene::init()
     ball->setScale(20);
     ballOffset = NS_CC::Vec2(0, paddle->getScaleY() / 2 + ball->getScaleY() / 2 + 5);
     ball->setPosition(paddle->getPosition() + ballOffset);
-    ball->direction = NS_CC::Vec2(1, 1);
+    ball->direction = ball->initialDirection;
     ball->velocity = 300;
     ball->bounds = NS_CC::Rect(0, 0, width, height);
     ball->scheduleUpdate();
@@ -167,7 +167,7 @@ void GameScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event
         case NS_CC::EventKeyboard::KeyCode::KEY_R:
             // reset ball
             ballReleased = false;
-            ball->direction = NS_CC::Vec2::ONE;
+            ball->direction = ball->initialDirection;
             break;
         case NS_CC::EventKeyboard::KeyCode::KEY_B:
             // reset board
