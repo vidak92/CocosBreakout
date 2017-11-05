@@ -2,6 +2,7 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
+#include "GameConfig.h"
 
 /**
 @brief    The cocos2d Application.
@@ -11,9 +12,6 @@ Private inheritance here hides part of interface from Director.
 class  AppDelegate : private cocos2d::Application
 {
 public:
-    static const int SCREEN_WIDTH = 640;
-    static const int SCREEN_HEIGHT = 480;
-    
     AppDelegate();
     virtual ~AppDelegate();
 

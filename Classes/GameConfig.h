@@ -10,6 +10,9 @@
 
 #include "Brick.h"
 
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480
+
 #define BRICK_COUNT_X 8
 #define BRICK_COUNT_Y 8
 

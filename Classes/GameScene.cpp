@@ -211,7 +211,8 @@ void GameScene::onKeyReleased(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Even
             }
             break;
         case NS_CC::EventKeyboard::KeyCode::KEY_ESCAPE:
-            NS_CC::Director::getInstance()->end();
+//            NS_CC::Director::getInstance()->end();
+            NS_CC::Director::getInstance()->popScene();
             break;
         default:
             break;

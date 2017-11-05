@@ -35,6 +35,7 @@ public:
     BrickType getType();
     void setDrawingColor(const NS_CC::Color3B& color);
     void setType(BrickType type);
+    void setOpacity(float opacity);
     void clear();
 };
 

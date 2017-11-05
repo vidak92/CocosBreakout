@@ -65,6 +65,12 @@ void Brick::setType(BrickType type)
     }
 }
 
+void Brick::setOpacity(float opacity)
+{
+    opacity = MIN(MAX(opacity, 0), 1);
+    sprite->setOpacity(255 * opacity);
+}
+
 void Brick::clear()
 {
     sprite->setVisible(false);
