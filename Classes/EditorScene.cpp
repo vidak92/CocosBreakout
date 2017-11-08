@@ -16,7 +16,7 @@ bool EditorScene::init()
         return false;
     }
     
-    grid = Grid::create(SCREEN_WIDTH, SCREEN_HEIGHT);
+    grid = Grid::create(SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_DATA_EMPTY);
     addChild(grid);
     for (int i = 0; i < BRICK_COUNT_X; ++i)
     {

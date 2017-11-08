@@ -8,13 +8,21 @@
 #include "Grid.h"
 #include <iostream>
 
-Grid* Grid::create(int width, int height)
+Grid* Grid::create(int width, int height, const BrickType levelData[BRICK_COUNT_Y][BRICK_COUNT_X])
 {
     Grid* pRet = new (std::nothrow) Grid;
     if (pRet)
     {
         pRet->screenWidth = width;
         pRet->screenHeight = height;
+        if (levelData != 0/* NULL */)
+        {
+            memcpy(pRet->bricksConfig, levelData, LEVEL_DATA_SIZE);
+        }
+        else
+        {
+            memcpy(pRet->bricksConfig, LEVEL_DATA_EMPTY, LEVEL_DATA_SIZE);
+        }
         if (pRet->init())
         {
             pRet->autorelease();
@@ -32,9 +40,6 @@ bool Grid::init()
     {
         return false;
     }
-    
-    LevelConfig levelConfig;
-    memcpy(bricksConfig, levelConfig.level0, sizeof(levelConfig.level0));
     
     for (int i = 0; i < BRICK_COUNT_X; ++i)
     {

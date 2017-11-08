@@ -23,7 +23,7 @@ private:
     Brick* bricks[BRICK_COUNT_X][BRICK_COUNT_Y];
     
 public:
-    static Grid* create(int width, int height);
+    static Grid* create(int width, int height, const BrickType levelData[BRICK_COUNT_Y][BRICK_COUNT_X]);
     bool init() override;
     void reset();
     Brick* getBrick(int i, int j);

@@ -33,7 +33,7 @@ bool GameScene::init()
         return false;
     }
     
-    grid = Grid::create(width, height);
+    grid = Grid::create(width, height, LEVEL_DATA_0);
     this->addChild(grid);
     
     paddle = Paddle::create();
