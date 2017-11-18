@@ -8,21 +8,14 @@
 #include "Grid.h"
 #include <iostream>
 
-Grid* Grid::create(int width, int height, const BrickType levelData[BRICK_COUNT_Y][BRICK_COUNT_X])
+Grid* Grid::create(int width, int height, LevelData levelData)
 {
     Grid* pRet = new (std::nothrow) Grid;
     if (pRet)
     {
         pRet->screenWidth = width;
         pRet->screenHeight = height;
-        if (levelData != 0/* NULL */)
-        {
-            memcpy(pRet->bricksConfig, levelData, LEVEL_DATA_SIZE);
-        }
-        else
-        {
-            memcpy(pRet->bricksConfig, LEVEL_DATA_EMPTY, LEVEL_DATA_SIZE);
-        }
+        pRet->levelData = levelData;
         if (pRet->init())
         {
             pRet->autorelease();
@@ -41,18 +34,18 @@ bool Grid::init()
         return false;
     }
     
-    for (int i = 0; i < BRICK_COUNT_X; ++i)
+    for (int i = 0; i < BRICK_ROWS; ++i)
     {
-        for (int j = 0; j < BRICK_COUNT_Y; ++j)
+        for (int j = 0; j < BRICK_COLUMNS; ++j)
         {
             Brick* brick = Brick::create();
-            brick->setType(bricksConfig[j][i]);
+            brick->setType(levelData.at(i, j));
             brick->setScale(BRICK_SCALE_X, BRICK_SCALE_Y);
-            auto position = NS_CC::Vec2(i * (BRICK_SCALE_X + BRICK_GAP) + BRICK_OFFSET_X,
-                                        screenHeight - j * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
+            auto position = NS_CC::Vec2(j * (BRICK_SCALE_X + BRICK_GAP) + BRICK_OFFSET_X,
+                                        screenHeight - i * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
             std::cout << "pos: " << position.x << ", " << position.y << std::endl;
             brick->setPosition(position);
-            bricks[i][j] = brick;
+            bricks.at(i, j) = brick;
             this->addChild(brick);
         }
     }
@@ -62,16 +55,16 @@ bool Grid::init()
 
 void Grid::reset()
 {
-    for (int i = 0; i < BRICK_COUNT_X; ++i)
+    for (int i = 0; i < BRICK_ROWS; ++i)
     {
-        for (int j = 0; j < BRICK_COUNT_Y; ++j)
+        for (int j = 0; j < BRICK_COLUMNS; ++j)
         {
-            bricks[i][j]->setType(bricksConfig[j][i]);
+            bricks.at(i, j)->setType(levelData.at(i, j));
         }
     }
 }
 
-Brick* Grid::getBrick(int i, int j)
-{
-    return bricks[i][j];
-}
+//Brick* Grid::getBrick(int i, int j)
+//{
+//    return bricks.at(i, j);
+//}

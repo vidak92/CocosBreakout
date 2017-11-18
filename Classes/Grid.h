@@ -11,22 +11,25 @@
 #include "cocos2d.h"
 #include "Brick.h"
 #include "GameConfig.h"
+#include "Matrix.h"
 
 class Grid : public NS_CC::Node
 {
 private:
-    BrickType bricksConfig[BRICK_COUNT_Y][BRICK_COUNT_X];
+    LevelData levelData;
     
     int screenWidth;
     int screenHeight;
     
-    Brick* bricks[BRICK_COUNT_X][BRICK_COUNT_Y];
+    Matrix<Brick*, BRICK_ROWS, BRICK_COLUMNS> bricks;
     
 public:
-    static Grid* create(int width, int height, const BrickType levelData[BRICK_COUNT_Y][BRICK_COUNT_X]);
+    static Grid* create(int width, int height, LevelData levelData);
     bool init() override;
     void reset();
-    Brick* getBrick(int i, int j);
+//    Brick* getBrick(int i, int j);
+    std::vector<Brick*>::const_iterator begin() { return bricks.begin(); }
+    std::vector<Brick*>::const_iterator end() { return bricks.end(); }
 };
 
 #endif /* Grid_h */

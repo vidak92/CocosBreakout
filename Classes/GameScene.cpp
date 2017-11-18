@@ -93,56 +93,47 @@ void GameScene::update(float dt)
         paddle->setDrawingColor(NS_CC::Color3B::WHITE);
     }
     
-    bool collisionDetected = false;
-    for (int i = 0; i < BRICK_COUNT_X; ++i)
+    for (auto it = grid->begin(); it != grid->end(); ++it)
     {
-        if (collisionDetected)
+        Brick* brick = *it;
+        if (brick->getType() == BrickType::EMPTY)
         {
-            break;
+            continue;
         }
-        for (int j = 0; j < BRICK_COUNT_Y; ++j)
+        if (ballRect.intersectsRect(brick->getRect()))
         {
-            Brick* brick = grid->getBrick(i, j);
-            if (brick->getType() == BrickType::EMPTY)
+            ball->setDrawingColor(NS_CC::Color3B::RED);
+            brick->setDrawingColor(NS_CC::Color3B::BLUE);
+            brick->clear();
+            brick->setType(BrickType::EMPTY);
+            auto ballDirection = ball->direction;
+            auto brickPosition = brick->getPosition();
+            float xDiff = (ballPosition.x - brickPosition.x) / (ball->getScaleX() / 2 + brick->getScaleX() / 2);
+            float yDiff = (ballPosition.y - brickPosition.y) / (ball->getScaleY() / 2 + brick->getScaleY() / 2);
+            std::cout << "x diff: " << xDiff << std::endl;
+            std::cout << "y diff: " << yDiff << std::endl;
+            if (abs(xDiff) >= 0.85 && abs(yDiff) >= 0.85)
             {
-                continue;
+                float xSign = xDiff >= 0 ? 1 : -1;
+                float ySign = yDiff >= 0 ? 1 : -1;
+                ballDirection.x = abs(ballDirection.x) * xSign;
+                ballDirection.y = abs(ballDirection.y) * ySign;
             }
-            if (ballRect.intersectsRect(brick->getRect()))
+            else if (abs(xDiff) > abs(yDiff))
             {
-                ball->setDrawingColor(NS_CC::Color3B::RED);
-                brick->setDrawingColor(NS_CC::Color3B::BLUE);
-                brick->clear();
-                brick->setType(BrickType::EMPTY);
-                auto ballDirection = ball->direction;
-                auto brickPosition = brick->getPosition();
-                float xDiff = (ballPosition.x - brickPosition.x) / (ball->getScaleX() / 2 + brick->getScaleX() / 2);
-                float yDiff = (ballPosition.y - brickPosition.y) / (ball->getScaleY() / 2 + brick->getScaleY() / 2);
-                std::cout << "x diff: " << xDiff << std::endl;
-                std::cout << "y diff: " << yDiff << std::endl;
-                if (abs(xDiff) >= 0.85 && abs(yDiff) >= 0.85)
-                {
-                    float xSign = xDiff >= 0 ? 1 : -1;
-                    float ySign = yDiff >= 0 ? 1 : -1;
-                    ballDirection.x = abs(ballDirection.x) * xSign;
-                    ballDirection.y = abs(ballDirection.y) * ySign;
-                }
-                else if (abs(xDiff) > abs(yDiff))
-                {
-                    ballDirection.x *= -1;
-                }
-                else
-                {
-                    ballDirection.y *= -1;
-                }
-                ball->direction = ballDirection;
-                std::cout << "ball dir: " << ballDirection.x << ", " << ballDirection.y << std::endl;
-                collisionDetected = true;
-                break;
+                ballDirection.x *= -1;
             }
             else
             {
-                brick->setDrawingColor(NS_CC::Color3B::WHITE);
+                ballDirection.y *= -1;
             }
+            ball->direction = ballDirection;
+            std::cout << "ball dir: " << ballDirection.x << ", " << ballDirection.y << std::endl;
+            break;
+        }
+        else
+        {
+            brick->setDrawingColor(NS_CC::Color3B::WHITE);
         }
     }
 }

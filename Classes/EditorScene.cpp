@@ -18,15 +18,12 @@ bool EditorScene::init()
     
     grid = Grid::create(SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_DATA_EMPTY);
     addChild(grid);
-    for (int i = 0; i < BRICK_COUNT_X; ++i)
+    for (auto it = grid->begin(); it != grid->end(); ++it)
     {
-        for (int j = 0; j < BRICK_COUNT_Y; ++j)
-        {
-            Brick* brick = grid->getBrick(i, j);
-            brick->setType(BrickType::EMPTY);
-            brick->setDrawingColor(NS_CC::Color3B::WHITE);
-            brick->setOpacity(0.2);
-        }
+        Brick* brick = *it;
+        brick->setType(BrickType::EMPTY);
+        brick->setDrawingColor(NS_CC::Color3B::WHITE);
+        brick->setOpacity(0.2);
     }
     
     mouseListener = NS_CC::EventListenerMouse::create();
@@ -55,23 +52,20 @@ void EditorScene::onMouseDown(::cocos2d::Event *event)
     std::cout << "Mouse Down detected, Key: " << (int)e->getMouseButton() << std::endl;
     int cursorX = e->getCursorX();
     int cursorY = e->getCursorY();
-    for (int i = 0; i < BRICK_COUNT_X; ++i)
+    for (auto it = grid->begin(); it != grid->end(); ++it)
     {
-        for (int j = 0; j < BRICK_COUNT_Y; ++j)
+        Brick* brick = *it;
+        if (brick->getRect().containsPoint(NS_CC::Vec2(cursorX, cursorY)))
         {
-            Brick* brick = grid->getBrick(i, j);
-            if (brick->getRect().containsPoint(NS_CC::Vec2(cursorX, cursorY)))
+            if (brick->getType() == BrickType::EMPTY)
             {
-                if (brick->getType() == BrickType::EMPTY)
-                {
-                    brick->setType(BrickType::REGULAR);
-                    brick->setOpacity(1.0);
-                }
-                else
-                {
-                    brick->setType(BrickType::EMPTY);
-                    brick->setOpacity(0.5);
-                }
+                brick->setType(BrickType::REGULAR);
+                brick->setOpacity(1.0);
+            }
+            else
+            {
+                brick->setType(BrickType::EMPTY);
+                brick->setOpacity(0.5);
             }
         }
     }
@@ -83,26 +77,23 @@ void EditorScene::onMouseMove(::cocos2d::Event *event)
     std::cout << "MousePosition X: " << e->getCursorX() << " Y: " << e->getCursorY() << std::endl;
     int cursorX = e->getCursorX();
     int cursorY = e->getCursorY();
-    for (int i = 0; i < BRICK_COUNT_X; ++i)
+    for (auto it = grid->begin(); it != grid->end(); ++it)
     {
-        for (int j = 0; j < BRICK_COUNT_Y; ++j)
+        Brick* brick = *it;
+        if (brick->getType() != BrickType::EMPTY)
         {
-            Brick* brick = grid->getBrick(i, j);
-            if (brick->getType() != BrickType::EMPTY)
-            {
-                brick->setDrawingColor(NS_CC::Color3B::WHITE);
-                brick->setOpacity(1.0);
-            }
-            else if (brick->getRect().containsPoint(NS_CC::Vec2(cursorX, cursorY)))
-            {
-                brick->setDrawingColor(NS_CC::Color3B::WHITE);
-                brick->setOpacity(0.5);
-            }
-            else
-            {
-                brick->setDrawingColor(NS_CC::Color3B::WHITE);
-                brick->setOpacity(0.2);
-            }
+            brick->setDrawingColor(NS_CC::Color3B::WHITE);
+            brick->setOpacity(1.0);
+        }
+        else if (brick->getRect().containsPoint(NS_CC::Vec2(cursorX, cursorY)))
+        {
+            brick->setDrawingColor(NS_CC::Color3B::WHITE);
+            brick->setOpacity(0.5);
+        }
+        else
+        {
+            brick->setDrawingColor(NS_CC::Color3B::WHITE);
+            brick->setOpacity(0.2);
         }
     }
 }
