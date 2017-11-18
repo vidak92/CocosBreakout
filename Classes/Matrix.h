@@ -25,7 +25,7 @@ public:
         _r = R;
         _c = C;
 //        _v = std::vector<T>(R * C);
-    };
+    }
     
     Matrix(std::initializer_list<std::initializer_list<T>> il)
     {
@@ -37,12 +37,12 @@ public:
         _v.reserve(R * C);
         for (auto list : il)
         {
-            for (int i : list)
+            for (const T& i : list)
             {
                 _v.push_back(i);
             }
         }
-    };
+    }
     
     ~Matrix(){};
     
@@ -51,7 +51,11 @@ public:
         CCASSERT(i >= 0 && i < _r && j >= 0 && j < _c, "Matrix index out of range!");
         int index = i * _c + j;
         return _v.at(index);
-    };
+    }
+    
+    typename std::vector<T>::iterator begin() { return _v.begin(); }
+    
+    typename std::vector<T>::iterator end() { return _v.end(); }
 };
 
 #endif /* Matrix_h */
