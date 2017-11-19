@@ -8,13 +8,11 @@
 #include "Grid.h"
 #include <iostream>
 
-Grid* Grid::create(int width, int height, LevelData levelData)
+Grid* Grid::create(LevelData levelData)
 {
     Grid* pRet = new (std::nothrow) Grid;
     if (pRet)
     {
-        pRet->screenWidth = width;
-        pRet->screenHeight = height;
         pRet->levelData = levelData;
         if (pRet->init())
         {
@@ -42,7 +40,7 @@ bool Grid::init()
             brick->setType(levelData.at(i, j));
             brick->setScale(BRICK_SCALE_X, BRICK_SCALE_Y);
             auto position = NS_CC::Vec2(j * (BRICK_SCALE_X + BRICK_GAP) + BRICK_OFFSET_X,
-                                        screenHeight - i * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
+                                        SCREEN_HEIGHT - i * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
             std::cout << "pos: " << position.x << ", " << position.y << std::endl;
             brick->setPosition(position);
             bricks.at(i, j) = brick;
@@ -63,8 +61,3 @@ void Grid::reset()
         }
     }
 }
-
-//Brick* Grid::getBrick(int i, int j)
-//{
-//    return bricks.at(i, j);
-//}

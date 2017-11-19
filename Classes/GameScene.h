@@ -13,13 +13,9 @@
 #include "Ball.h"
 #include "Grid.h"
 
-//USING_NS_CC;
-
 class GameScene : public cocos2d::Scene
 {
 private:
-    int width;
-    int height;
     bool leftKeyDown;
     bool rightKeyDown;
     bool ballReleased;
@@ -27,6 +23,7 @@ private:
     Ball* ball;
     NS_CC::Vec2 ballOffset;
     Grid* grid;
+    int _currentLevel;
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static NS_CC::Scene* createScene();
@@ -39,8 +36,11 @@ public:
     void onKeyReleased(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event* event);
     
     // implement the "static create()" method manually
-    CREATE_FUNC(GameScene);
-    static GameScene* create(int width, int height);
+//    CREATE_FUNC(GameScene);
+    /*:
+     @param levelIndex - use -1 for empty level index
+     */
+    static GameScene* createWithLevel(int levelIndex);
 };
 
 #endif /* GameScene_h */

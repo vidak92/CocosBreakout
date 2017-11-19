@@ -19,7 +19,7 @@ bool MenuScene::init()
     auto playLabel = NS_CC::Label::createWithSystemFont("Play", "Arial", 32);
     auto playMenuItem = NS_CC::MenuItemLabel::create(playLabel, [](cocos2d::Ref* sender)
     {
-        NS_CC::Director::getInstance()->pushScene(GameScene::create(SCREEN_WIDTH, SCREEN_HEIGHT));
+        NS_CC::Director::getInstance()->pushScene(GameScene::createWithLevel(0));
     });
     
     auto editorLabel = NS_CC::Label::createWithSystemFont("Editor", "Arial", 32);

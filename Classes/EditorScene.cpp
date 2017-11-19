@@ -8,6 +8,7 @@
 #include "EditorScene.h"
 #include <iostream>
 #include <sstream>
+#include "LevelManager.h"
 
 bool EditorScene::init()
 {
@@ -16,7 +17,7 @@ bool EditorScene::init()
         return false;
     }
     
-    grid = Grid::create(SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_DATA_EMPTY);
+    grid = Grid::create(LevelManager::getInstance()->getLevel(-1));
     addChild(grid);
     for (auto it = grid->begin(); it != grid->end(); ++it)
     {

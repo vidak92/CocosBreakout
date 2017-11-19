@@ -6,15 +6,15 @@
 //
 
 #include "GameScene.h"
+#include "LevelManager.h"
 #include <iostream>
 
-GameScene* GameScene::create(int width, int height)
+GameScene* GameScene::createWithLevel(int levelIndex)
 {
     GameScene *pRet = new(std::nothrow) GameScene();
     if (pRet)
     {
-        pRet->width = width;
-        pRet->height = height;
+        pRet->_currentLevel = levelIndex;
         if (pRet->init())
         {
             pRet->autorelease();
@@ -33,7 +33,8 @@ bool GameScene::init()
         return false;
     }
     
-    grid = Grid::create(width, height, LEVEL_DATA_0);
+    LevelData levelData = LevelManager::getInstance()->getLevel(_currentLevel);
+    grid = Grid::create(levelData);
     this->addChild(grid);
     
     paddle = Paddle::create();
@@ -41,7 +42,7 @@ bool GameScene::init()
     paddle->setPosition(100, 40);
     paddle->direction = NS_CC::Vec2::ZERO;
     paddle->velocity = 400;
-    paddle->bounds = NS_CC::Rect(0, 0, width, height);
+    paddle->bounds = NS_CC::Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     paddle->scheduleUpdate();
     this->addChild(paddle);
     
@@ -51,7 +52,7 @@ bool GameScene::init()
     ball->setPosition(paddle->getPosition() + ballOffset);
     ball->direction = ball->initialDirection;
     ball->velocity = 300;
-    ball->bounds = NS_CC::Rect(0, 0, width, height);
+    ball->bounds = NS_CC::Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     ball->scheduleUpdate();
     this->addChild(ball);
     
@@ -155,14 +156,17 @@ void GameScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event
         case NS_CC::EventKeyboard::KeyCode::KEY_SPACE:
             ballReleased = true;
             break;
-        case NS_CC::EventKeyboard::KeyCode::KEY_R:
+        case NS_CC::EventKeyboard::KeyCode::KEY_B:
             // reset ball
             ballReleased = false;
             ball->direction = ball->initialDirection;
             break;
-        case NS_CC::EventKeyboard::KeyCode::KEY_B:
+        case NS_CC::EventKeyboard::KeyCode::KEY_G:
             // reset board
             grid->reset();
+            break;
+        case NS_CC::EventKeyboard::KeyCode::KEY_R:
+            // TODO: reset level
             break;
         case NS_CC::EventKeyboard::KeyCode::KEY_N:
             ball->normalizedDirection = !ball->normalizedDirection;
