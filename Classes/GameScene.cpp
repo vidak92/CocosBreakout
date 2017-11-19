@@ -33,6 +33,8 @@ bool GameScene::init()
         return false;
     }
     
+    levelFinished = false;
+    
     LevelData levelData = LevelManager::getInstance()->getLevel(_currentLevel);
     grid = Grid::create(levelData);
     this->addChild(grid);
@@ -67,12 +69,19 @@ bool GameScene::init()
 
 void GameScene::update(float dt)
 {
+    if (levelFinished)
+    {
+        return;
+    }
+    
     auto ballPosition = ball->getPosition();
     auto paddlePosition = paddle->getPosition();
     if (!ballReleased)
     {
         ball->setPosition(paddlePosition + ballOffset);
     }
+    
+    // handle wall collisions
     auto ballRect = ball->getRect();
     auto paddleRect = paddle->getRect();
     if (ballRect.intersectsRect(paddleRect))
@@ -94,6 +103,7 @@ void GameScene::update(float dt)
         paddle->setDrawingColor(NS_CC::Color3B::WHITE);
     }
     
+    // handle brick collisions
     for (auto it = grid->begin(); it != grid->end(); ++it)
     {
         Brick* brick = *it;
@@ -137,6 +147,32 @@ void GameScene::update(float dt)
             brick->setDrawingColor(NS_CC::Color3B::WHITE);
         }
     }
+    
+    // check if level is finished
+    levelFinished = true;
+    for (auto it = grid->begin(); it != grid->end(); ++it)
+    {
+        Brick* brick = *it;
+        if (brick->getType() != EMPTY)
+        {
+            levelFinished = false;
+            break;
+        }
+    }
+    if (levelFinished)
+    {
+        if (++_currentLevel == LevelManager::getInstance()->getLevelCount())
+        {
+            _currentLevel = 0;
+        }
+        ball->direction = NS_CC::Vec2::ZERO;
+        ball->setDrawingColor(NS_CC::Color3B::WHITE);
+        paddle->direction = NS_CC::Vec2::ZERO;
+        getEventDispatcher()->pauseEventListenersForTarget(this);
+        auto delayAction = NS_CC::DelayTime::create(1.0f);
+        auto callFuncAction = NS_CC::CallFunc::create(CC_CALLBACK_0(GameScene::resetLevel, this));
+        runAction(NS_CC::Sequence::create(delayAction, callFuncAction, NULL));
+    }
 }
 
 void GameScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event* event)
@@ -166,7 +202,7 @@ void GameScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event
             grid->reset();
             break;
         case NS_CC::EventKeyboard::KeyCode::KEY_R:
-            // TODO: reset level
+            resetLevel();
             break;
         case NS_CC::EventKeyboard::KeyCode::KEY_N:
             ball->normalizedDirection = !ball->normalizedDirection;
@@ -212,4 +248,15 @@ void GameScene::onKeyReleased(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Even
         default:
             break;
     }
+}
+
+void GameScene::resetLevel()
+{
+    levelFinished = false;
+    ballReleased = false;
+    ball->direction = ball->initialDirection;
+    LevelData levelData = LevelManager::getInstance()->getLevel(_currentLevel);
+    grid->setLevelData(levelData);
+    grid->reset();
+    getEventDispatcher()->resumeEventListenersForTarget(this);
 }

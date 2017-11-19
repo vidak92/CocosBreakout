@@ -24,6 +24,10 @@ private:
     NS_CC::Vec2 ballOffset;
     Grid* grid;
     int _currentLevel;
+    bool levelFinished;
+    
+    void resetLevel();
+    
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static NS_CC::Scene* createScene();

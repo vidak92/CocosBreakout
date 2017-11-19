@@ -23,8 +23,9 @@ public:
     static Grid* create(LevelData levelData);
     bool init() override;
     void reset();
-    std::vector<Brick*>::const_iterator begin() { return bricks.begin(); }
-    std::vector<Brick*>::const_iterator end() { return bricks.end(); }
+    std::vector<Brick*>::iterator begin() { return bricks.begin(); }
+    std::vector<Brick*>::iterator end() { return bricks.end(); }
+    void setLevelData(LevelData levelData) { this->levelData = levelData; }
 };
 
 #endif /* Grid_h */

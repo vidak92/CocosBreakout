@@ -25,6 +25,7 @@ public:
     static LevelManager* getInstance();
     static void destroyInstance();
     LevelData getLevel(int levelIndex);
+    int getLevelCount() { return levels.size(); }
 };
 
 #endif /* LevelManager_h */
