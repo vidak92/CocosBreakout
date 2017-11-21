@@ -47,33 +47,30 @@ BrickType Brick::getType()
 
 void Brick::setDrawingColor(const Color3B& color)
 {
-    if (!_sprite->isVisible())
-    {
-        _sprite->setVisible(true);
-    }
     _sprite->setColor(color);
+}
+
+void Brick::setDefaultDrawingColor()
+{
+    if (_type == BrickType::UNBREAKABLE)
+    {
+        setDrawingColor(Color3B::GRAY);
+    }
+    else if (_type == BrickType::REGULAR)
+    {
+        setDrawingColor(Color3B::WHITE);
+    }
 }
 
 void Brick::setType(BrickType type)
 {
-    this->_type = type;
-    if (type == BrickType::EMPTY)
-    {
-        clear();
-    }
-    else
-    {
-        setDrawingColor(Color3B::WHITE);
-    }
+    _type = type;
+    _sprite->setVisible(_type != BrickType::EMPTY);
+    setDefaultDrawingColor();
 }
 
 void Brick::setOpacity(float opacity)
 {
     opacity = MIN(MAX(opacity, 0), 1);
     _sprite->setOpacity(255 * opacity);
-}
-
-void Brick::clear()
-{
-    _sprite->setVisible(false);
 }

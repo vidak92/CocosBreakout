@@ -14,7 +14,6 @@ enum BrickType
 {
     EMPTY,
     REGULAR,
-    DOUBLE,
     UNBREAKABLE
 };
 
@@ -36,9 +35,9 @@ public:
     BrickType getType();
     
     void setDrawingColor(const cocos2d::Color3B& color);
+    void setDefaultDrawingColor();
     void setType(BrickType type);
     void setOpacity(float opacity);
-    void clear();
 };
 
 #endif /* BrickNode_h */

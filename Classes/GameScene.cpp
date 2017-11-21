@@ -117,8 +117,10 @@ void GameScene::update(float dt)
         {
             _ball->setDrawingColor(Color3B::RED);
             brick->setDrawingColor(Color3B::BLUE);
-            brick->clear();
-            brick->setType(BrickType::EMPTY);
+            if (brick->getType() == BrickType::REGULAR)
+            {
+                brick->setType(BrickType::EMPTY);
+            }
             auto ballDirection = _ball->direction;
             auto brickPosition = brick->getPosition();
             float xDiff = (ballPosition.x - brickPosition.x) / (_ball->getScaleX() / 2 + brick->getScaleX() / 2);
@@ -146,7 +148,7 @@ void GameScene::update(float dt)
         }
         else
         {
-            brick->setDrawingColor(Color3B::WHITE);
+            brick->setDefaultDrawingColor();
         }
     }
     
@@ -155,7 +157,8 @@ void GameScene::update(float dt)
     for (auto it = _grid->begin(); it != _grid->end(); ++it)
     {
         Brick* brick = *it;
-        if (brick->getType() != EMPTY)
+        BrickType type = brick->getType();
+        if (type != EMPTY && type != UNBREAKABLE)
         {
             _levelFinished = false;
             break;

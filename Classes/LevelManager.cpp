@@ -55,14 +55,14 @@ LevelManager::LevelManager()
 //    };
     LevelData level0 =
     {
-        { REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR },
-        { REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR },
-        { REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR },
-        { REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR },
-        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
-        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
-        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
-        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
+        { REGULAR,    REGULAR,    REGULAR,    UNBREAKABLE,  UNBREAKABLE,    REGULAR,    REGULAR,    REGULAR },
+        { REGULAR,    REGULAR,    REGULAR,    UNBREAKABLE,  UNBREAKABLE,    REGULAR,    REGULAR,    REGULAR },
+        { REGULAR,    REGULAR,    REGULAR,    UNBREAKABLE,  UNBREAKABLE,    REGULAR,    REGULAR,    REGULAR },
+        { REGULAR,    REGULAR,    REGULAR,    UNBREAKABLE,  UNBREAKABLE,    REGULAR,    REGULAR,    REGULAR },
+        { EMPTY,      EMPTY,      EMPTY,      EMPTY,        EMPTY,          EMPTY,      EMPTY,      EMPTY },
+        { EMPTY,      EMPTY,      EMPTY,      EMPTY,        EMPTY,          EMPTY,      EMPTY,      EMPTY },
+        { EMPTY,      EMPTY,      EMPTY,      EMPTY,        EMPTY,          EMPTY,      EMPTY,      EMPTY },
+        { EMPTY,      EMPTY,      EMPTY,      EMPTY,        EMPTY,          EMPTY,      EMPTY,      EMPTY },
     };
     _levels.push_back(level0);
     
