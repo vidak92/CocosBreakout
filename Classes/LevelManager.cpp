@@ -7,30 +7,30 @@
 
 #include "LevelManager.h"
 
-LevelManager* LevelManager::sharedInstance = nullptr;
+LevelManager* LevelManager::_sharedInstance = nullptr;
 
 LevelManager* LevelManager::getInstance()
 {
-    if (!sharedInstance)
+    if (!_sharedInstance)
     {
-        sharedInstance = new (std::nothrow) LevelManager;
-        CCASSERT(sharedInstance, "LevelManager not initialized!");
+        _sharedInstance = new (std::nothrow) LevelManager;
+        CCASSERT(_sharedInstance, "LevelManager not initialized!");
     }
-    return sharedInstance;
+    return _sharedInstance;
 }
 
 void LevelManager::destroyInstance()
 {
-    if (sharedInstance)
+    if (_sharedInstance)
     {
-        delete sharedInstance;
-        sharedInstance = nullptr;
+        delete _sharedInstance;
+        _sharedInstance = nullptr;
     }
 }
 
 LevelManager::LevelManager()
 {
-    emptyLevel =
+    _emptyLevel =
     {
         { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
         { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
@@ -42,6 +42,17 @@ LevelManager::LevelManager()
         { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
     };
     
+//    LevelData level0 =
+//    {
+//        { EMPTY,      EMPTY,      EMPTY,      REGULAR,    EMPTY,      EMPTY,      EMPTY,      EMPTY },
+//        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
+//        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
+//        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
+//        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
+//        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
+//        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
+//        { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
+//    };
     LevelData level0 =
     {
         { REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR },
@@ -53,7 +64,7 @@ LevelManager::LevelManager()
         { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
         { EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
     };
-    levels.push_back(level0);
+    _levels.push_back(level0);
     
     LevelData level1 =
     {
@@ -66,7 +77,7 @@ LevelManager::LevelManager()
         { EMPTY,    EMPTY,      EMPTY,      REGULAR,    REGULAR,    EMPTY,      EMPTY,      EMPTY },
         { EMPTY,    EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
     };
-    levels.push_back(level1);
+    _levels.push_back(level1);
     
     LevelData level2 =
     {
@@ -79,14 +90,14 @@ LevelManager::LevelManager()
         { REGULAR,    REGULAR,    EMPTY,  REGULAR,    REGULAR,    EMPTY,  REGULAR,    REGULAR },
         { REGULAR,    REGULAR,    EMPTY,  REGULAR,    REGULAR,    EMPTY,  REGULAR,    REGULAR },
     };
-    levels.push_back(level2);
+    _levels.push_back(level2);
 }
 
 LevelData LevelManager::getLevel(int levelIndex)
 {
-    if (levelIndex >= 0 && levelIndex < levels.size())
+    if (levelIndex >= 0 && levelIndex < _levels.size())
     {
-        return levels.at(levelIndex);
+        return _levels.at(levelIndex);
     }
-    return emptyLevel;
+    return _emptyLevel;
 }

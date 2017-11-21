@@ -15,7 +15,7 @@ Grid* Grid::create(LevelData levelData)
     Grid* pRet = new (std::nothrow) Grid;
     if (pRet)
     {
-        pRet->levelData = levelData;
+        pRet->_levelData = levelData;
         if (pRet->init())
         {
             pRet->autorelease();
@@ -39,13 +39,13 @@ bool Grid::init()
         for (int j = 0; j < BRICK_COLUMNS; ++j)
         {
             Brick* brick = Brick::create();
-            brick->setType(levelData.at(i, j));
+            brick->setType(_levelData.at(i, j));
             brick->setScale(BRICK_SCALE_X, BRICK_SCALE_Y);
             auto position = Vec2(j * (BRICK_SCALE_X + BRICK_GAP) + BRICK_OFFSET_X,
                                  SCREEN_HEIGHT - i * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
             std::cout << "pos: " << position.x << ", " << position.y << std::endl;
             brick->setPosition(position);
-            bricks.at(i, j) = brick;
+            _bricks.at(i, j) = brick;
             this->addChild(brick);
         }
     }
@@ -59,7 +59,7 @@ void Grid::reset()
     {
         for (int j = 0; j < BRICK_COLUMNS; ++j)
         {
-            bricks.at(i, j)->setType(levelData.at(i, j));
+            _bricks.at(i, j)->setType(_levelData.at(i, j));
         }
     }
 }

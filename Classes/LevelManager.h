@@ -14,18 +14,17 @@
 class LevelManager
 {
 private:
-    LevelData emptyLevel;
-    std::vector<LevelData> levels;
-    std::vector<LevelData> customLevels;
+    LevelData _emptyLevel;
+    std::vector<LevelData> _levels;
     
-    static LevelManager* sharedInstance;
+    static LevelManager* _sharedInstance;
     LevelManager();
     
 public:
     static LevelManager* getInstance();
     static void destroyInstance();
     LevelData getLevel(int levelIndex);
-    int getLevelCount() { return levels.size(); }
+    int getLevelCount() { return _levels.size(); }
 };
 
 #endif /* LevelManager_h */

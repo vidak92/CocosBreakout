@@ -16,16 +16,16 @@
 class Grid : public cocos2d::Node
 {
 private:
-    LevelData levelData;
-    Matrix<Brick*, BRICK_ROWS, BRICK_COLUMNS> bricks;
+    LevelData _levelData;
+    Matrix<Brick*, BRICK_ROWS, BRICK_COLUMNS> _bricks;
     
 public:
     static Grid* create(LevelData levelData);
     bool init() override;
     void reset();
-    std::vector<Brick*>::iterator begin() { return bricks.begin(); }
-    std::vector<Brick*>::iterator end() { return bricks.end(); }
-    void setLevelData(LevelData levelData) { this->levelData = levelData; }
+    std::vector<Brick*>::iterator begin() { return _bricks.begin(); }
+    std::vector<Brick*>::iterator end() { return _bricks.end(); }
+    void setLevelData(LevelData levelData) { this->_levelData = levelData; }
 };
 
 #endif /* Grid_h */

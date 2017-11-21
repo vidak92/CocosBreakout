@@ -35,30 +35,30 @@ bool GameScene::init()
         return false;
     }
     
-    levelFinished = false;
+    _levelFinished = false;
     
     LevelData levelData = LevelManager::getInstance()->getLevel(_currentLevel);
-    grid = Grid::create(levelData);
-    this->addChild(grid);
+    _grid = Grid::create(levelData);
+    this->addChild(_grid);
     
-    paddle = Paddle::create();
-    paddle->setScale(120, 20);
-    paddle->setPosition(100, 40);
-    paddle->direction = Vec2::ZERO;
-    paddle->velocity = 400;
-    paddle->bounds = Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    paddle->scheduleUpdate();
-    this->addChild(paddle);
+    _paddle = Paddle::create();
+    _paddle->setScale(120, 20);
+    _paddle->setPosition(100, 40);
+    _paddle->direction = Vec2::ZERO;
+    _paddle->velocity = 400;
+    _paddle->bounds = Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    _paddle->scheduleUpdate();
+    this->addChild(_paddle);
     
-    ball = Ball::create();
-    ball->setScale(20);
-    ballOffset = Vec2(0, paddle->getScaleY() / 2 + ball->getScaleY() / 2 + 5);
-    ball->setPosition(paddle->getPosition() + ballOffset);
-    ball->direction = ball->initialDirection;
-    ball->velocity = 300;
-    ball->bounds = Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    ball->scheduleUpdate();
-    this->addChild(ball);
+    _ball = Ball::create();
+    _ball->setScale(20);
+    _ballOffset = Vec2(0, _paddle->getScaleY() / 2 + _ball->getScaleY() / 2 + 5);
+    _ball->setPosition(_paddle->getPosition() + _ballOffset);
+    _ball->direction = _ball->initialDirection;
+    _ball->velocity = 300;
+    _ball->bounds = Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    _ball->scheduleUpdate();
+    this->addChild(_ball);
     
     this->scheduleUpdate();
     auto listener = EventListenerKeyboard::create();
@@ -71,42 +71,42 @@ bool GameScene::init()
 
 void GameScene::update(float dt)
 {
-    if (levelFinished)
+    if (_levelFinished)
     {
         return;
     }
     
-    auto ballPosition = ball->getPosition();
-    auto paddlePosition = paddle->getPosition();
-    if (!ballReleased)
+    auto ballPosition = _ball->getPosition();
+    auto paddlePosition = _paddle->getPosition();
+    if (!_ballReleased)
     {
-        ball->setPosition(paddlePosition + ballOffset);
+        _ball->setPosition(paddlePosition + _ballOffset);
     }
     
     // handle wall collisions
-    auto ballRect = ball->getRect();
-    auto paddleRect = paddle->getRect();
+    auto ballRect = _ball->getRect();
+    auto paddleRect = _paddle->getRect();
     if (ballRect.intersectsRect(paddleRect))
     {
-        ball->setDrawingColor(Color3B::RED);
-        paddle->setDrawingColor(Color3B::GREEN);
-        auto ballDirection = ball->direction;
+        _ball->setDrawingColor(Color3B::RED);
+        _paddle->setDrawingColor(Color3B::GREEN);
+        auto ballDirection = _ball->direction;
         float xDiff = ballPosition.x - paddlePosition.x;
-        float maxXDiff = ball->getScaleX() / 2 + paddle->getScaleX() / 2;
+        float maxXDiff = _ball->getScaleX() / 2 + _paddle->getScaleX() / 2;
         float xDirection = xDiff / maxXDiff;
         ballDirection.x = xDirection;
         ballDirection.y = ballPosition.y < paddlePosition.y ? -1 : 1;
-        ball->direction = ballDirection;
+        _ball->direction = ballDirection;
         std::cout << "bounce direction: " << ballDirection.x << ", "<< ballDirection.y << std::endl;
     }
     else
     {
-        ball->setDrawingColor(Color3B::WHITE);
-        paddle->setDrawingColor(Color3B::WHITE);
+        _ball->setDrawingColor(Color3B::WHITE);
+        _paddle->setDrawingColor(Color3B::WHITE);
     }
     
     // handle brick collisions
-    for (auto it = grid->begin(); it != grid->end(); ++it)
+    for (auto it = _grid->begin(); it != _grid->end(); ++it)
     {
         Brick* brick = *it;
         if (brick->getType() == BrickType::EMPTY)
@@ -115,14 +115,14 @@ void GameScene::update(float dt)
         }
         if (ballRect.intersectsRect(brick->getRect()))
         {
-            ball->setDrawingColor(Color3B::RED);
+            _ball->setDrawingColor(Color3B::RED);
             brick->setDrawingColor(Color3B::BLUE);
             brick->clear();
             brick->setType(BrickType::EMPTY);
-            auto ballDirection = ball->direction;
+            auto ballDirection = _ball->direction;
             auto brickPosition = brick->getPosition();
-            float xDiff = (ballPosition.x - brickPosition.x) / (ball->getScaleX() / 2 + brick->getScaleX() / 2);
-            float yDiff = (ballPosition.y - brickPosition.y) / (ball->getScaleY() / 2 + brick->getScaleY() / 2);
+            float xDiff = (ballPosition.x - brickPosition.x) / (_ball->getScaleX() / 2 + brick->getScaleX() / 2);
+            float yDiff = (ballPosition.y - brickPosition.y) / (_ball->getScaleY() / 2 + brick->getScaleY() / 2);
             std::cout << "x diff: " << xDiff << std::endl;
             std::cout << "y diff: " << yDiff << std::endl;
             if (abs(xDiff) >= 0.85 && abs(yDiff) >= 0.85)
@@ -140,7 +140,7 @@ void GameScene::update(float dt)
             {
                 ballDirection.y *= -1;
             }
-            ball->direction = ballDirection;
+            _ball->direction = ballDirection;
             std::cout << "ball dir: " << ballDirection.x << ", " << ballDirection.y << std::endl;
             break;
         }
@@ -151,25 +151,25 @@ void GameScene::update(float dt)
     }
     
     // check if level is finished
-    levelFinished = true;
-    for (auto it = grid->begin(); it != grid->end(); ++it)
+    _levelFinished = true;
+    for (auto it = _grid->begin(); it != _grid->end(); ++it)
     {
         Brick* brick = *it;
         if (brick->getType() != EMPTY)
         {
-            levelFinished = false;
+            _levelFinished = false;
             break;
         }
     }
-    if (levelFinished)
+    if (_levelFinished)
     {
         if (++_currentLevel == LevelManager::getInstance()->getLevelCount())
         {
             _currentLevel = 0;
         }
-        ball->direction = Vec2::ZERO;
-        ball->setDrawingColor(Color3B::WHITE);
-        paddle->direction = Vec2::ZERO;
+        _ball->direction = Vec2::ZERO;
+        _ball->setDrawingColor(Color3B::WHITE);
+        _paddle->direction = Vec2::ZERO;
         getEventDispatcher()->pauseEventListenersForTarget(this);
         auto delayAction = DelayTime::create(1.0f);
         auto callFuncAction = CallFunc::create(CC_CALLBACK_0(GameScene::resetLevel, this));
@@ -183,32 +183,32 @@ void GameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
     {
         case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
         case EventKeyboard::KeyCode::KEY_A:
-            leftKeyDown = true;
-            paddle->direction.x = -1;
+            _leftKeyDown = true;
+            _paddle->direction.x = -1;
             break;
         case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
         case EventKeyboard::KeyCode::KEY_D:
-            rightKeyDown = true;
-            paddle->direction.x = 1;
+            _rightKeyDown = true;
+            _paddle->direction.x = 1;
             break;
         case EventKeyboard::KeyCode::KEY_SPACE:
-            ballReleased = true;
+            _ballReleased = true;
             break;
         case EventKeyboard::KeyCode::KEY_B:
             // reset ball
-            ballReleased = false;
-            ball->direction = ball->initialDirection;
+            _ballReleased = false;
+            _ball->direction = _ball->initialDirection;
             break;
         case EventKeyboard::KeyCode::KEY_G:
             // reset board
-            grid->reset();
+            _grid->reset();
             break;
         case EventKeyboard::KeyCode::KEY_R:
             resetLevel();
             break;
         case EventKeyboard::KeyCode::KEY_N:
-            ball->normalizedDirection = !ball->normalizedDirection;
-            std::cout << "normalizedDirection: " << ball->normalizedDirection << std::endl;
+            _ball->normalizedDirection = !_ball->normalizedDirection;
+            std::cout << "normalizedDirection: " << _ball->normalizedDirection << std::endl;
             break;
         default:
             break;
@@ -221,26 +221,26 @@ void GameScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
     {
         case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
         case EventKeyboard::KeyCode::KEY_A:
-            leftKeyDown = false;
-            if (rightKeyDown)
+            _leftKeyDown = false;
+            if (_rightKeyDown)
             {
-                paddle->direction.x = 1;
+                _paddle->direction.x = 1;
             }
             else
             {
-                paddle->direction.x = 0;
+                _paddle->direction.x = 0;
             }
             break;
         case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
         case EventKeyboard::KeyCode::KEY_D:
-            rightKeyDown = false;
-            if (leftKeyDown)
+            _rightKeyDown = false;
+            if (_leftKeyDown)
             {
-                paddle->direction.x = -1;
+                _paddle->direction.x = -1;
             }
             else
             {
-                paddle->direction.x = 0;
+                _paddle->direction.x = 0;
             }
             break;
         case EventKeyboard::KeyCode::KEY_ESCAPE:
@@ -254,11 +254,11 @@ void GameScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 
 void GameScene::resetLevel()
 {
-    levelFinished = false;
-    ballReleased = false;
-    ball->direction = ball->initialDirection;
+    _levelFinished = false;
+    _ballReleased = false;
+    _ball->direction = _ball->initialDirection;
     LevelData levelData = LevelManager::getInstance()->getLevel(_currentLevel);
-    grid->setLevelData(levelData);
-    grid->reset();
+    _grid->setLevelData(levelData);
+    _grid->reset();
     getEventDispatcher()->resumeEventListenersForTarget(this);
 }

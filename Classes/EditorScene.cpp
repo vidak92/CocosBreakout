@@ -19,9 +19,9 @@ bool EditorScene::init()
         return false;
     }
     
-    grid = Grid::create(LevelManager::getInstance()->getLevel(-1));
-    addChild(grid);
-    for (auto it = grid->begin(); it != grid->end(); ++it)
+    _grid = Grid::create(LevelManager::getInstance()->getLevel(-1));
+    addChild(_grid);
+    for (auto it = _grid->begin(); it != _grid->end(); ++it)
     {
         Brick* brick = *it;
         brick->setType(BrickType::EMPTY);
@@ -29,16 +29,16 @@ bool EditorScene::init()
         brick->setOpacity(0.2);
     }
     
-    mouseListener = EventListenerMouse::create();
-    mouseListener->onMouseUp = CC_CALLBACK_1(EditorScene::onMouseUp, this);
-    mouseListener->onMouseDown = CC_CALLBACK_1(EditorScene::onMouseDown, this);
-    mouseListener->onMouseMove = CC_CALLBACK_1(EditorScene::onMouseMove, this);
-    getEventDispatcher()->addEventListenerWithFixedPriority(mouseListener, 1);
+    _mouseListener = EventListenerMouse::create();
+    _mouseListener->onMouseUp = CC_CALLBACK_1(EditorScene::onMouseUp, this);
+    _mouseListener->onMouseDown = CC_CALLBACK_1(EditorScene::onMouseDown, this);
+    _mouseListener->onMouseMove = CC_CALLBACK_1(EditorScene::onMouseMove, this);
+    getEventDispatcher()->addEventListenerWithFixedPriority(_mouseListener, 1);
     
-    keyboardListener = EventListenerKeyboard::create();
-    keyboardListener->onKeyPressed = CC_CALLBACK_2(EditorScene::onKeyPressed, this);
-    keyboardListener->onKeyReleased = CC_CALLBACK_2(EditorScene::onKeyReleased, this);
-    getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
+    _keyboardListener = EventListenerKeyboard::create();
+    _keyboardListener->onKeyPressed = CC_CALLBACK_2(EditorScene::onKeyPressed, this);
+    _keyboardListener->onKeyReleased = CC_CALLBACK_2(EditorScene::onKeyReleased, this);
+    getEventDispatcher()->addEventListenerWithSceneGraphPriority(_keyboardListener, this);
     
     return true;
 }
@@ -55,7 +55,7 @@ void EditorScene::onMouseDown(::cocos2d::Event *event)
     std::cout << "Mouse Down detected, Key: " << (int)e->getMouseButton() << std::endl;
     int cursorX = e->getCursorX();
     int cursorY = e->getCursorY();
-    for (auto it = grid->begin(); it != grid->end(); ++it)
+    for (auto it = _grid->begin(); it != _grid->end(); ++it)
     {
         Brick* brick = *it;
         if (brick->getRect().containsPoint(Vec2(cursorX, cursorY)))
@@ -80,7 +80,7 @@ void EditorScene::onMouseMove(::cocos2d::Event *event)
     std::cout << "MousePosition X: " << e->getCursorX() << " Y: " << e->getCursorY() << std::endl;
     int cursorX = e->getCursorX();
     int cursorY = e->getCursorY();
-    for (auto it = grid->begin(); it != grid->end(); ++it)
+    for (auto it = _grid->begin(); it != _grid->end(); ++it)
     {
         Brick* brick = *it;
         if (brick->getType() != BrickType::EMPTY)
@@ -115,8 +115,8 @@ void EditorScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event *event)
     switch (keyCode)
     {
         case EventKeyboard::KeyCode::KEY_ESCAPE:
-            getEventDispatcher()->removeEventListener(mouseListener);
-            getEventDispatcher()->removeEventListener(keyboardListener);
+            getEventDispatcher()->removeEventListener(_mouseListener);
+            getEventDispatcher()->removeEventListener(_keyboardListener);
 //            Director::getInstance()->end();
             Director::getInstance()->popScene();
             break;

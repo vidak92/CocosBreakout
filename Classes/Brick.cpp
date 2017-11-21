@@ -17,10 +17,10 @@ bool Brick::init()
         return false;
     }
     
-    sprite = Sprite::create("rect.png");
-    sprite->setPosition(0, 0);
-    sprite->setAnchorPoint(Vec2(0.5, 0.5));
-    addChild(sprite);
+    _sprite = Sprite::create("rect.png");
+    _sprite->setPosition(0, 0);
+    _sprite->setAnchorPoint(Vec2(0.5, 0.5));
+    addChild(_sprite);
     setType(BrickType::REGULAR);
     
 //    scheduleUpdate();
@@ -35,28 +35,28 @@ void Brick::update(float dt)
 Rect Brick::getRect()
 {
     return Rect(getPositionX() - getScaleX() / 2,
-                       getPositionY() - getScaleY() / 2,
-                       getScaleX(),
-                       getScaleY());
+                getPositionY() - getScaleY() / 2,
+                getScaleX(),
+                getScaleY());
 }
 
 BrickType Brick::getType()
 {
-    return type;
+    return _type;
 }
 
 void Brick::setDrawingColor(const Color3B& color)
 {
-    if (!sprite->isVisible())
+    if (!_sprite->isVisible())
     {
-        sprite->setVisible(true);
+        _sprite->setVisible(true);
     }
-    sprite->setColor(color);
+    _sprite->setColor(color);
 }
 
 void Brick::setType(BrickType type)
 {
-    this->type = type;
+    this->_type = type;
     if (type == BrickType::EMPTY)
     {
         clear();
@@ -70,10 +70,10 @@ void Brick::setType(BrickType type)
 void Brick::setOpacity(float opacity)
 {
     opacity = MIN(MAX(opacity, 0), 1);
-    sprite->setOpacity(255 * opacity);
+    _sprite->setOpacity(255 * opacity);
 }
 
 void Brick::clear()
 {
-    sprite->setVisible(false);
+    _sprite->setVisible(false);
 }

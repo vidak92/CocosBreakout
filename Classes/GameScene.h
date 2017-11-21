@@ -16,15 +16,15 @@
 class GameScene : public cocos2d::Scene
 {
 private:
-    bool leftKeyDown;
-    bool rightKeyDown;
-    bool ballReleased;
-    Paddle* paddle;
-    Ball* ball;
-    cocos2d::Vec2 ballOffset;
-    Grid* grid;
+    bool _leftKeyDown;
+    bool _rightKeyDown;
+    bool _ballReleased;
+    Paddle* _paddle;
+    Ball* _ball;
+    cocos2d::Vec2 _ballOffset;
+    Grid* _grid;
     int _currentLevel;
-    bool levelFinished;
+    bool _levelFinished;
     
     void resetLevel();
     

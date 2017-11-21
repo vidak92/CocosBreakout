@@ -21,8 +21,8 @@ enum BrickType
 class Brick : public cocos2d::Node
 {
 private:
-    cocos2d::Sprite* sprite;
-    BrickType type;
+    cocos2d::Sprite* _sprite;
+    BrickType _type;
 public:
     cocos2d::Vec2 direction;
     float velocity;
@@ -31,8 +31,10 @@ public:
     CREATE_FUNC(Brick);
     virtual bool init() override;
     virtual void update(float dt) override;
+
     cocos2d::Rect getRect();
     BrickType getType();
+    
     void setDrawingColor(const cocos2d::Color3B& color);
     void setType(BrickType type);
     void setOpacity(float opacity);

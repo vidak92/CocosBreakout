@@ -14,9 +14,9 @@
 class EditorScene : public cocos2d::Scene
 {
 private:
-    Grid* grid;
-    cocos2d::EventListenerMouse* mouseListener;
-    cocos2d::EventListenerKeyboard* keyboardListener;
+    Grid* _grid;
+    cocos2d::EventListenerMouse* _mouseListener;
+    cocos2d::EventListenerKeyboard* _keyboardListener;
 public:
     CREATE_FUNC(EditorScene);
     bool init() override;
