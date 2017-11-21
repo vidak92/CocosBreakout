@@ -8,6 +8,8 @@
 #include "Grid.h"
 #include <iostream>
 
+USING_NS_CC;
+
 Grid* Grid::create(LevelData levelData)
 {
     Grid* pRet = new (std::nothrow) Grid;
@@ -39,8 +41,8 @@ bool Grid::init()
             Brick* brick = Brick::create();
             brick->setType(levelData.at(i, j));
             brick->setScale(BRICK_SCALE_X, BRICK_SCALE_Y);
-            auto position = NS_CC::Vec2(j * (BRICK_SCALE_X + BRICK_GAP) + BRICK_OFFSET_X,
-                                        SCREEN_HEIGHT - i * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
+            auto position = Vec2(j * (BRICK_SCALE_X + BRICK_GAP) + BRICK_OFFSET_X,
+                                 SCREEN_HEIGHT - i * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
             std::cout << "pos: " << position.x << ", " << position.y << std::endl;
             brick->setPosition(position);
             bricks.at(i, j) = brick;

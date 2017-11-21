@@ -11,22 +11,22 @@
 #include "cocos2d.h"
 #include "Grid.h"
 
-class EditorScene : public NS_CC::Scene
+class EditorScene : public cocos2d::Scene
 {
 private:
     Grid* grid;
-    NS_CC::EventListenerMouse* mouseListener;
-    NS_CC::EventListenerKeyboard* keyboardListener;
+    cocos2d::EventListenerMouse* mouseListener;
+    cocos2d::EventListenerKeyboard* keyboardListener;
 public:
     CREATE_FUNC(EditorScene);
     bool init() override;
     
-    void onMouseUp(NS_CC::Event* event);
-    void onMouseDown(NS_CC::Event* event);
-    void onMouseMove(NS_CC::Event* event);
+    void onMouseUp(cocos2d::Event* event);
+    void onMouseDown(cocos2d::Event* event);
+    void onMouseMove(cocos2d::Event* event);
     
-    void onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event* event);
-    void onKeyReleased(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event* event);
+    void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 };
 
 #endif /* EditorScene_h */

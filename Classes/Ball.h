@@ -14,7 +14,7 @@
 class Ball : public Brick
 {
 public:
-    const NS_CC::Vec2 initialDirection = NS_CC::Vec2(0.66, 1);
+    const cocos2d::Vec2 initialDirection = cocos2d::Vec2(0.66, 1);
     bool normalizedDirection;
     
     CREATE_FUNC(Ball);

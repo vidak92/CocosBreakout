@@ -10,6 +10,8 @@
 #include <sstream>
 #include "LevelManager.h"
 
+USING_NS_CC;
+
 bool EditorScene::init()
 {
     if (!Scene::init())
@@ -23,17 +25,17 @@ bool EditorScene::init()
     {
         Brick* brick = *it;
         brick->setType(BrickType::EMPTY);
-        brick->setDrawingColor(NS_CC::Color3B::WHITE);
+        brick->setDrawingColor(Color3B::WHITE);
         brick->setOpacity(0.2);
     }
     
-    mouseListener = NS_CC::EventListenerMouse::create();
+    mouseListener = EventListenerMouse::create();
     mouseListener->onMouseUp = CC_CALLBACK_1(EditorScene::onMouseUp, this);
     mouseListener->onMouseDown = CC_CALLBACK_1(EditorScene::onMouseDown, this);
     mouseListener->onMouseMove = CC_CALLBACK_1(EditorScene::onMouseMove, this);
     getEventDispatcher()->addEventListenerWithFixedPriority(mouseListener, 1);
     
-    keyboardListener = NS_CC::EventListenerKeyboard::create();
+    keyboardListener = EventListenerKeyboard::create();
     keyboardListener->onKeyPressed = CC_CALLBACK_2(EditorScene::onKeyPressed, this);
     keyboardListener->onKeyReleased = CC_CALLBACK_2(EditorScene::onKeyReleased, this);
     getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
@@ -43,20 +45,20 @@ bool EditorScene::init()
 
 void EditorScene::onMouseUp(::cocos2d::Event *event)
 {
-    NS_CC::EventMouse* e = (NS_CC::EventMouse*)event;
+    EventMouse* e = (EventMouse*)event;
     std::cout << "Mouse Down detected, Key: " << (int)e->getMouseButton() << std::endl;
 }
 
 void EditorScene::onMouseDown(::cocos2d::Event *event)
 {
-    NS_CC::EventMouse* e = (NS_CC::EventMouse*)event;
+    EventMouse* e = (EventMouse*)event;
     std::cout << "Mouse Down detected, Key: " << (int)e->getMouseButton() << std::endl;
     int cursorX = e->getCursorX();
     int cursorY = e->getCursorY();
     for (auto it = grid->begin(); it != grid->end(); ++it)
     {
         Brick* brick = *it;
-        if (brick->getRect().containsPoint(NS_CC::Vec2(cursorX, cursorY)))
+        if (brick->getRect().containsPoint(Vec2(cursorX, cursorY)))
         {
             if (brick->getType() == BrickType::EMPTY)
             {
@@ -74,7 +76,7 @@ void EditorScene::onMouseDown(::cocos2d::Event *event)
 
 void EditorScene::onMouseMove(::cocos2d::Event *event)
 {
-    NS_CC::EventMouse* e = (NS_CC::EventMouse*)event;
+    EventMouse* e = (EventMouse*)event;
     std::cout << "MousePosition X: " << e->getCursorX() << " Y: " << e->getCursorY() << std::endl;
     int cursorX = e->getCursorX();
     int cursorY = e->getCursorY();
@@ -83,23 +85,23 @@ void EditorScene::onMouseMove(::cocos2d::Event *event)
         Brick* brick = *it;
         if (brick->getType() != BrickType::EMPTY)
         {
-            brick->setDrawingColor(NS_CC::Color3B::WHITE);
+            brick->setDrawingColor(Color3B::WHITE);
             brick->setOpacity(1.0);
         }
-        else if (brick->getRect().containsPoint(NS_CC::Vec2(cursorX, cursorY)))
+        else if (brick->getRect().containsPoint(Vec2(cursorX, cursorY)))
         {
-            brick->setDrawingColor(NS_CC::Color3B::WHITE);
+            brick->setDrawingColor(Color3B::WHITE);
             brick->setOpacity(0.5);
         }
         else
         {
-            brick->setDrawingColor(NS_CC::Color3B::WHITE);
+            brick->setDrawingColor(Color3B::WHITE);
             brick->setOpacity(0.2);
         }
     }
 }
 
-void EditorScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event *event)
+void EditorScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event *event)
 {
     switch (keyCode)
     {
@@ -108,15 +110,15 @@ void EditorScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Eve
     }
 }
 
-void EditorScene::onKeyReleased(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event *event)
+void EditorScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event *event)
 {
     switch (keyCode)
     {
-        case NS_CC::EventKeyboard::KeyCode::KEY_ESCAPE:
+        case EventKeyboard::KeyCode::KEY_ESCAPE:
             getEventDispatcher()->removeEventListener(mouseListener);
             getEventDispatcher()->removeEventListener(keyboardListener);
-//            NS_CC::Director::getInstance()->end();
-            NS_CC::Director::getInstance()->popScene();
+//            Director::getInstance()->end();
+            Director::getInstance()->popScene();
             break;
         default:
             break;

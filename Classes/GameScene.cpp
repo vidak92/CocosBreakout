@@ -9,6 +9,8 @@
 #include "LevelManager.h"
 #include <iostream>
 
+USING_NS_CC;
+
 GameScene* GameScene::createWithLevel(int levelIndex)
 {
     GameScene *pRet = new(std::nothrow) GameScene();
@@ -28,7 +30,7 @@ GameScene* GameScene::createWithLevel(int levelIndex)
 
 bool GameScene::init()
 {
-    if (!NS_CC::Scene::init())
+    if (!Scene::init())
     {
         return false;
     }
@@ -42,24 +44,24 @@ bool GameScene::init()
     paddle = Paddle::create();
     paddle->setScale(120, 20);
     paddle->setPosition(100, 40);
-    paddle->direction = NS_CC::Vec2::ZERO;
+    paddle->direction = Vec2::ZERO;
     paddle->velocity = 400;
-    paddle->bounds = NS_CC::Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    paddle->bounds = Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     paddle->scheduleUpdate();
     this->addChild(paddle);
     
     ball = Ball::create();
     ball->setScale(20);
-    ballOffset = NS_CC::Vec2(0, paddle->getScaleY() / 2 + ball->getScaleY() / 2 + 5);
+    ballOffset = Vec2(0, paddle->getScaleY() / 2 + ball->getScaleY() / 2 + 5);
     ball->setPosition(paddle->getPosition() + ballOffset);
     ball->direction = ball->initialDirection;
     ball->velocity = 300;
-    ball->bounds = NS_CC::Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    ball->bounds = Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     ball->scheduleUpdate();
     this->addChild(ball);
     
     this->scheduleUpdate();
-    auto listener = NS_CC::EventListenerKeyboard::create();
+    auto listener = EventListenerKeyboard::create();
     listener->onKeyPressed = CC_CALLBACK_2(GameScene::onKeyPressed, this);
     listener->onKeyReleased = CC_CALLBACK_2(GameScene::onKeyReleased, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -86,8 +88,8 @@ void GameScene::update(float dt)
     auto paddleRect = paddle->getRect();
     if (ballRect.intersectsRect(paddleRect))
     {
-        ball->setDrawingColor(NS_CC::Color3B::RED);
-        paddle->setDrawingColor(NS_CC::Color3B::GREEN);
+        ball->setDrawingColor(Color3B::RED);
+        paddle->setDrawingColor(Color3B::GREEN);
         auto ballDirection = ball->direction;
         float xDiff = ballPosition.x - paddlePosition.x;
         float maxXDiff = ball->getScaleX() / 2 + paddle->getScaleX() / 2;
@@ -99,8 +101,8 @@ void GameScene::update(float dt)
     }
     else
     {
-        ball->setDrawingColor(NS_CC::Color3B::WHITE);
-        paddle->setDrawingColor(NS_CC::Color3B::WHITE);
+        ball->setDrawingColor(Color3B::WHITE);
+        paddle->setDrawingColor(Color3B::WHITE);
     }
     
     // handle brick collisions
@@ -113,8 +115,8 @@ void GameScene::update(float dt)
         }
         if (ballRect.intersectsRect(brick->getRect()))
         {
-            ball->setDrawingColor(NS_CC::Color3B::RED);
-            brick->setDrawingColor(NS_CC::Color3B::BLUE);
+            ball->setDrawingColor(Color3B::RED);
+            brick->setDrawingColor(Color3B::BLUE);
             brick->clear();
             brick->setType(BrickType::EMPTY);
             auto ballDirection = ball->direction;
@@ -144,7 +146,7 @@ void GameScene::update(float dt)
         }
         else
         {
-            brick->setDrawingColor(NS_CC::Color3B::WHITE);
+            brick->setDrawingColor(Color3B::WHITE);
         }
     }
     
@@ -165,46 +167,46 @@ void GameScene::update(float dt)
         {
             _currentLevel = 0;
         }
-        ball->direction = NS_CC::Vec2::ZERO;
-        ball->setDrawingColor(NS_CC::Color3B::WHITE);
-        paddle->direction = NS_CC::Vec2::ZERO;
+        ball->direction = Vec2::ZERO;
+        ball->setDrawingColor(Color3B::WHITE);
+        paddle->direction = Vec2::ZERO;
         getEventDispatcher()->pauseEventListenersForTarget(this);
-        auto delayAction = NS_CC::DelayTime::create(1.0f);
-        auto callFuncAction = NS_CC::CallFunc::create(CC_CALLBACK_0(GameScene::resetLevel, this));
-        runAction(NS_CC::Sequence::create(delayAction, callFuncAction, NULL));
+        auto delayAction = DelayTime::create(1.0f);
+        auto callFuncAction = CallFunc::create(CC_CALLBACK_0(GameScene::resetLevel, this));
+        runAction(Sequence::create(delayAction, callFuncAction, NULL));
     }
 }
 
-void GameScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event* event)
+void GameScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
     switch (keyCode)
     {
-        case NS_CC::EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-        case NS_CC::EventKeyboard::KeyCode::KEY_A:
+        case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+        case EventKeyboard::KeyCode::KEY_A:
             leftKeyDown = true;
             paddle->direction.x = -1;
             break;
-        case NS_CC::EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-        case NS_CC::EventKeyboard::KeyCode::KEY_D:
+        case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+        case EventKeyboard::KeyCode::KEY_D:
             rightKeyDown = true;
             paddle->direction.x = 1;
             break;
-        case NS_CC::EventKeyboard::KeyCode::KEY_SPACE:
+        case EventKeyboard::KeyCode::KEY_SPACE:
             ballReleased = true;
             break;
-        case NS_CC::EventKeyboard::KeyCode::KEY_B:
+        case EventKeyboard::KeyCode::KEY_B:
             // reset ball
             ballReleased = false;
             ball->direction = ball->initialDirection;
             break;
-        case NS_CC::EventKeyboard::KeyCode::KEY_G:
+        case EventKeyboard::KeyCode::KEY_G:
             // reset board
             grid->reset();
             break;
-        case NS_CC::EventKeyboard::KeyCode::KEY_R:
+        case EventKeyboard::KeyCode::KEY_R:
             resetLevel();
             break;
-        case NS_CC::EventKeyboard::KeyCode::KEY_N:
+        case EventKeyboard::KeyCode::KEY_N:
             ball->normalizedDirection = !ball->normalizedDirection;
             std::cout << "normalizedDirection: " << ball->normalizedDirection << std::endl;
             break;
@@ -213,12 +215,12 @@ void GameScene::onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event
     }
 }
 
-void GameScene::onKeyReleased(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event* event)
+void GameScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
     switch (keyCode)
     {
-        case NS_CC::EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-        case NS_CC::EventKeyboard::KeyCode::KEY_A:
+        case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+        case EventKeyboard::KeyCode::KEY_A:
             leftKeyDown = false;
             if (rightKeyDown)
             {
@@ -229,8 +231,8 @@ void GameScene::onKeyReleased(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Even
                 paddle->direction.x = 0;
             }
             break;
-        case NS_CC::EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-        case NS_CC::EventKeyboard::KeyCode::KEY_D:
+        case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+        case EventKeyboard::KeyCode::KEY_D:
             rightKeyDown = false;
             if (leftKeyDown)
             {
@@ -241,9 +243,9 @@ void GameScene::onKeyReleased(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Even
                 paddle->direction.x = 0;
             }
             break;
-        case NS_CC::EventKeyboard::KeyCode::KEY_ESCAPE:
-//            NS_CC::Director::getInstance()->end();
-            NS_CC::Director::getInstance()->popScene();
+        case EventKeyboard::KeyCode::KEY_ESCAPE:
+//            Director::getInstance()->end();
+            Director::getInstance()->popScene();
             break;
         default:
             break;

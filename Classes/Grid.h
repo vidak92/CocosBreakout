@@ -13,7 +13,7 @@
 #include "GameConfig.h"
 #include "Matrix.h"
 
-class Grid : public NS_CC::Node
+class Grid : public cocos2d::Node
 {
 private:
     LevelData levelData;

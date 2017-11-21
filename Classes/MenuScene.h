@@ -10,14 +10,14 @@
 
 #include "cocos2d.h"
 
-class MenuScene : public NS_CC::Scene
+class MenuScene : public cocos2d::Scene
 {
 public:
     CREATE_FUNC(MenuScene);
     bool init() override;
     
-    void onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event* event);
-    void onKeyReleased(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event* event);
+    void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 };
 
 #endif /* MenuScene_h */

@@ -18,22 +18,22 @@ enum BrickType
     UNBREAKABLE
 };
 
-class Brick : public NS_CC::Node
+class Brick : public cocos2d::Node
 {
 private:
-    NS_CC::Sprite* sprite;
+    cocos2d::Sprite* sprite;
     BrickType type;
 public:
-    NS_CC::Vec2 direction;
+    cocos2d::Vec2 direction;
     float velocity;
-    NS_CC::Rect bounds;
+    cocos2d::Rect bounds;
     
     CREATE_FUNC(Brick);
     virtual bool init() override;
     virtual void update(float dt) override;
-    NS_CC::Rect getRect();
+    cocos2d::Rect getRect();
     BrickType getType();
-    void setDrawingColor(const NS_CC::Color3B& color);
+    void setDrawingColor(const cocos2d::Color3B& color);
     void setType(BrickType type);
     void setOpacity(float opacity);
     void clear();

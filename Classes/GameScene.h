@@ -21,7 +21,7 @@ private:
     bool ballReleased;
     Paddle* paddle;
     Ball* ball;
-    NS_CC::Vec2 ballOffset;
+    cocos2d::Vec2 ballOffset;
     Grid* grid;
     int _currentLevel;
     bool levelFinished;
@@ -30,14 +30,14 @@ private:
     
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
-    static NS_CC::Scene* createScene();
+    static cocos2d::Scene* createScene();
     
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
     
     virtual void update(float dt);
-    void onKeyPressed(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event* event);
-    void onKeyReleased(NS_CC::EventKeyboard::KeyCode keyCode, NS_CC::Event* event);
+    void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     
     // implement the "static create()" method manually
 //    CREATE_FUNC(GameScene);

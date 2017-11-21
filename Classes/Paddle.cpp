@@ -7,10 +7,12 @@
 
 #include "Paddle.h"
 
+USING_NS_CC;
+
 void Paddle::update(float dt)
 {
     auto position = getPosition();
     position += direction * velocity * dt;
-    position.x = NS_CC::clampf(position.x, bounds.getMinX() + getScaleX() / 2, bounds.getMaxX() - getScaleX() / 2);
+    position.x = clampf(position.x, bounds.getMinX() + getScaleX() / 2, bounds.getMaxX() - getScaleX() / 2);
     this->setPosition(position);
 }
