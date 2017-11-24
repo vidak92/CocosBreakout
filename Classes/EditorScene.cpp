@@ -24,8 +24,8 @@ bool EditorScene::init()
     for (auto it = _grid->begin(); it != _grid->end(); ++it)
     {
         Brick* brick = *it;
+        brick->setAlwaysVisible(true);
         brick->setType(BrickType::EMPTY);
-        brick->setDrawingColor(Color3B::WHITE);
         brick->setOpacity(0.2);
     }
     
@@ -60,15 +60,21 @@ void EditorScene::onMouseDown(::cocos2d::Event *event)
         Brick* brick = *it;
         if (brick->getRect().containsPoint(Vec2(cursorX, cursorY)))
         {
-            if (brick->getType() == BrickType::EMPTY)
+            BrickType brickType = brick->getType();
+            if (brickType == BrickType::EMPTY)
             {
                 brick->setType(BrickType::REGULAR);
                 brick->setOpacity(1.0);
             }
-            else
+            else if (brickType == BrickType::REGULAR)
+            {
+                brick->setType(BrickType::UNBREAKABLE);
+                brick->setOpacity(1.0);
+            }
+            else if (brickType == BrickType::UNBREAKABLE)
             {
                 brick->setType(BrickType::EMPTY);
-                brick->setOpacity(0.5);
+                brick->setOpacity(0.3);
             }
         }
     }
@@ -85,17 +91,14 @@ void EditorScene::onMouseMove(::cocos2d::Event *event)
         Brick* brick = *it;
         if (brick->getType() != BrickType::EMPTY)
         {
-            brick->setDrawingColor(Color3B::WHITE);
             brick->setOpacity(1.0);
         }
         else if (brick->getRect().containsPoint(Vec2(cursorX, cursorY)))
         {
-            brick->setDrawingColor(Color3B::WHITE);
-            brick->setOpacity(0.5);
+            brick->setOpacity(0.3);
         }
         else
         {
-            brick->setDrawingColor(Color3B::WHITE);
             brick->setOpacity(0.2);
         }
     }

@@ -22,6 +22,7 @@ class Brick : public cocos2d::Node
 private:
     cocos2d::Sprite* _sprite;
     BrickType _type;
+    bool _alwaysVisible;
 public:
     cocos2d::Vec2 direction;
     float velocity;
@@ -38,6 +39,7 @@ public:
     void setDefaultDrawingColor();
     void setType(BrickType type);
     void setOpacity(float opacity);
+    void setAlwaysVisible(bool visible) { _alwaysVisible = visible; }
 };
 
 #endif /* BrickNode_h */

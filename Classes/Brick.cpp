@@ -56,7 +56,7 @@ void Brick::setDefaultDrawingColor()
     {
         setDrawingColor(Color3B::GRAY);
     }
-    else if (_type == BrickType::REGULAR)
+    else // REGULAR or EMPTY
     {
         setDrawingColor(Color3B::WHITE);
     }
@@ -65,7 +65,7 @@ void Brick::setDefaultDrawingColor()
 void Brick::setType(BrickType type)
 {
     _type = type;
-    _sprite->setVisible(_type != BrickType::EMPTY);
+    _sprite->setVisible(_alwaysVisible || _type != BrickType::EMPTY);
     setDefaultDrawingColor();
 }
 
