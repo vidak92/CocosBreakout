@@ -1,6 +1,9 @@
 # ================
 # cocos2d-x
 # ================
+cocos/
+cocos2d/
+cocosstudio/
 [Bb]in/
 cocosStudio.cfg
 cocosStudio.udf
@@ -78,10 +81,3 @@ profile
 *.moved-aside
 DerivedData
 .idea/
-
-# ================
-# Cocos
-# ================
-
-cocos/
-cocos2d/
