@@ -21,6 +21,8 @@ bool Ball::init()
 
 void Ball::update(float dt)
 {
+    Brick::update(dt);
+    
     auto position = getPosition();
     if (normalizedDirection)
     {

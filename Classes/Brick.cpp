@@ -23,13 +23,20 @@ bool Brick::init()
     addChild(_sprite);
     setType(BrickType::REGULAR);
     
-//    scheduleUpdate();
+    scheduleUpdate();
     return true;
 }
 
 void Brick::update(float dt)
 {
-    
+    if (isColliding)
+    {
+        setDrawingColor(collisionColor);
+    }
+    else
+    {
+        setDefaultDrawingColor();
+    }
 }
 
 Rect Brick::getRect()

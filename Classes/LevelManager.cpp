@@ -55,27 +55,27 @@ LevelManager::LevelManager()
 //    };
     LevelData level0 =
     {
-        { REGULAR,    REGULAR,    REGULAR,    UNBREAKABLE,  UNBREAKABLE,    REGULAR,    REGULAR,    REGULAR },
-        { REGULAR,    REGULAR,    REGULAR,    UNBREAKABLE,  UNBREAKABLE,    REGULAR,    REGULAR,    REGULAR },
-        { REGULAR,    REGULAR,    REGULAR,    UNBREAKABLE,  UNBREAKABLE,    REGULAR,    REGULAR,    REGULAR },
-        { REGULAR,    REGULAR,    REGULAR,    UNBREAKABLE,  UNBREAKABLE,    REGULAR,    REGULAR,    REGULAR },
-        { EMPTY,      EMPTY,      EMPTY,      EMPTY,        EMPTY,          EMPTY,      EMPTY,      EMPTY },
-        { EMPTY,      EMPTY,      EMPTY,      EMPTY,        EMPTY,          EMPTY,      EMPTY,      EMPTY },
-        { EMPTY,      EMPTY,      EMPTY,      EMPTY,        EMPTY,          EMPTY,      EMPTY,      EMPTY },
-        { EMPTY,      EMPTY,      EMPTY,      EMPTY,        EMPTY,          EMPTY,      EMPTY,      EMPTY },
+        { REGULAR,    REGULAR,    UNBREAKABLE,  REGULAR,    REGULAR,    UNBREAKABLE,    REGULAR,    REGULAR },
+        { REGULAR,    REGULAR,    UNBREAKABLE,  REGULAR,    REGULAR,    UNBREAKABLE,    REGULAR,    REGULAR },
+        { REGULAR,    REGULAR,    UNBREAKABLE,  REGULAR,    REGULAR,    UNBREAKABLE,    REGULAR,    REGULAR },
+        { REGULAR,    REGULAR,    UNBREAKABLE,  REGULAR,    REGULAR,    UNBREAKABLE,    REGULAR,    REGULAR },
+        { EMPTY,      EMPTY,      EMPTY,        EMPTY,      EMPTY,      EMPTY,          EMPTY,      EMPTY },
+        { EMPTY,      EMPTY,      EMPTY,        EMPTY,      EMPTY,      EMPTY,          EMPTY,      EMPTY },
+        { EMPTY,      EMPTY,      EMPTY,        EMPTY,      EMPTY,      EMPTY,          EMPTY,      EMPTY },
+        { EMPTY,      EMPTY,      EMPTY,        EMPTY,      EMPTY,      EMPTY,          EMPTY,      EMPTY },
     };
     _levels.push_back(level0);
     
     LevelData level1 =
     {
-        { EMPTY,    EMPTY,      EMPTY,      REGULAR,    REGULAR,    EMPTY,      EMPTY,      EMPTY },
-        { EMPTY,    EMPTY,      REGULAR,    REGULAR,    REGULAR,    REGULAR,    EMPTY,      EMPTY },
-        { EMPTY,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    EMPTY },
-        { REGULAR,  REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR },
-        { EMPTY,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    REGULAR,    EMPTY },
-        { EMPTY,    EMPTY,      REGULAR,    REGULAR,    REGULAR,    REGULAR,    EMPTY,      EMPTY },
-        { EMPTY,    EMPTY,      EMPTY,      REGULAR,    REGULAR,    EMPTY,      EMPTY,      EMPTY },
-        { EMPTY,    EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY,      EMPTY },
+        { EMPTY,    EMPTY,      EMPTY,      REGULAR,        REGULAR,        EMPTY,      EMPTY,      EMPTY },
+        { EMPTY,    EMPTY,      REGULAR,    REGULAR,        REGULAR,        REGULAR,    EMPTY,      EMPTY },
+        { EMPTY,    REGULAR,    REGULAR,    UNBREAKABLE,    UNBREAKABLE,    REGULAR,    REGULAR,    EMPTY },
+        { REGULAR,  REGULAR,    REGULAR,    REGULAR,        REGULAR,        REGULAR,    REGULAR,    REGULAR },
+        { EMPTY,    REGULAR,    REGULAR,    UNBREAKABLE,    UNBREAKABLE,    REGULAR,    REGULAR,    EMPTY },
+        { EMPTY,    EMPTY,      REGULAR,    REGULAR,        REGULAR,        REGULAR,    EMPTY,      EMPTY },
+        { EMPTY,    EMPTY,      EMPTY,      REGULAR,        REGULAR,        EMPTY,      EMPTY,      EMPTY },
+        { EMPTY,    EMPTY,      EMPTY,      EMPTY,          EMPTY,          EMPTY,      EMPTY,      EMPTY },
     };
     _levels.push_back(level1);
     

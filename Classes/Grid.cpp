@@ -45,6 +45,7 @@ bool Grid::init()
                                  SCREEN_HEIGHT - i * (BRICK_SCALE_Y + BRICK_GAP) - BRICK_OFFSET_Y);
             std::cout << "pos: " << position.x << ", " << position.y << std::endl;
             brick->setPosition(position);
+            brick->collisionColor = Color3B::BLUE;
             _bricks.at(i, j) = brick;
             this->addChild(brick);
         }

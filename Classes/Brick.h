@@ -27,6 +27,8 @@ public:
     cocos2d::Vec2 direction;
     float velocity;
     cocos2d::Rect bounds;
+    bool isColliding;
+    cocos2d::Color3B collisionColor = cocos2d::Color3B::RED;
     
     CREATE_FUNC(Brick);
     virtual bool init() override;

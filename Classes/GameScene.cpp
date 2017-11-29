@@ -47,7 +47,7 @@ bool GameScene::init()
     _paddle->direction = Vec2::ZERO;
     _paddle->velocity = 400;
     _paddle->bounds = Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    _paddle->scheduleUpdate();
+    _paddle->collisionColor = Color3B::GREEN;
     this->addChild(_paddle);
     
     _ball = Ball::create();
@@ -57,7 +57,7 @@ bool GameScene::init()
     _ball->direction = _ball->initialDirection;
     _ball->velocity = 300;
     _ball->bounds = Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    _ball->scheduleUpdate();
+    _ball->collisionColor = Color3B::RED;
     this->addChild(_ball);
     
     this->scheduleUpdate();
@@ -88,8 +88,8 @@ void GameScene::update(float dt)
     auto paddleRect = _paddle->getRect();
     if (ballRect.intersectsRect(paddleRect))
     {
-        _ball->setDrawingColor(Color3B::RED);
-        _paddle->setDrawingColor(Color3B::GREEN);
+        _ball->isColliding = true;
+        _paddle->isColliding = true;
         auto ballDirection = _ball->direction;
         float xDiff = ballPosition.x - paddlePosition.x;
         float maxXDiff = _ball->getScaleX() / 2 + _paddle->getScaleX() / 2;
@@ -101,8 +101,8 @@ void GameScene::update(float dt)
     }
     else
     {
-        _ball->setDrawingColor(Color3B::WHITE);
-        _paddle->setDrawingColor(Color3B::WHITE);
+        _ball->isColliding = false;
+        _paddle->isColliding = false;
     }
     
     // handle brick collisions
@@ -115,8 +115,8 @@ void GameScene::update(float dt)
         }
         if (ballRect.intersectsRect(brick->getRect()))
         {
-            _ball->setDrawingColor(Color3B::RED);
-            brick->setDrawingColor(Color3B::BLUE);
+            _ball->isColliding = true;
+            brick->isColliding = true;
             if (brick->getType() == BrickType::REGULAR)
             {
                 brick->setType(BrickType::EMPTY);
@@ -148,7 +148,7 @@ void GameScene::update(float dt)
         }
         else
         {
-            brick->setDefaultDrawingColor();
+            brick->isColliding = false;
         }
     }
     
