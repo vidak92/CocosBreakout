@@ -27,7 +27,7 @@ cocosStudio.udf
 *.a
 
 # ================
-# Windows crap
+# Windows stuff
 # ================
 
 # Windows image file caches
@@ -41,7 +41,7 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # ================
-# Mac crap
+# Mac stuff
 # ================
 
 .DS_Store
@@ -80,7 +80,8 @@ DerivedData
 .idea/
 
 # ================
-# Others
+# Cocos
 # ================
 
 cocos/
+cocos2d/
